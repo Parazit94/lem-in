@@ -18,6 +18,6 @@ typedef struct  s_lem
     t_room  rooms[ROOM];
     char    **connect;
 }               t_lem;
-t_lem   g_info;
+static t_lem    g_info;
 
 #endif
