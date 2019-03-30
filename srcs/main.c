@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 20:05:15 by vferry            #+#    #+#             */
-/*   Updated: 2019/03/30 17:05:17 by vferry           ###   ########.fr       */
+/*   Updated: 2019/03/30 17:44:27 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void    print_way(void)
     int     j;
     
     lol = g_info.ways;
-    ft_printf("%p\n", &lol);
     i = 0;
     while (lol)
     {
@@ -27,7 +26,8 @@ void    print_way(void)
         ft_printf("c_room[%d] = %d\n", i, lol->c_rom);
         while (lol->way[j] != -1)
         {
-            ft_printf("room[%d] = %d\t", j, lol->way[j]);
+            ft_printf("room[%d] = %d - ", j, lol->way[j]);
+            ft_printf("%s\t\t", g_info.rooms[lol->way[j]].name);
             j++;
         }
         ft_printf("\n");
@@ -46,6 +46,7 @@ void    look_way(void)
     int     next;
     t_ways  *head;
     t_ways  *buff;
+    t_ways  *buff2;
 
     i = 0;
     k = 0;
@@ -65,6 +66,7 @@ void    look_way(void)
         while (j < g_info.c_room)
         {
             buff = head;
+            buff2 = buff;
             if (g_info.connect[g_info.tail[i]][j] == 1 && j != g_info.r_start && g_info.rooms[j].weight == 0)
             {
                 next++;
@@ -72,13 +74,18 @@ void    look_way(void)
                 {
                     while (buff->next)
                         buff = buff->next;
+                    while (buff2)
+                        if (buff2->c_rom - 2 >=0 && buff2->way[buff2->c_rom - 2] == g_info.tail[i])
+                            break ;
+                        else
+                            buff2 = buff2->next;
                     buff->next = malloc(sizeof(t_ways));
                     buff->next->prev = buff;
                     buff->next->next = NULL;
                     lol = 0;
-                    while (lol < buff->c_rom - 1)
+                    while (lol < buff2->c_rom - 1)
                     {
-                        buff->next->way[lol] = buff->way[lol];
+                        buff->next->way[lol] = buff2->way[lol];
                         lol++;
                     }
                     buff->next->way[lol] = j;
@@ -108,7 +115,7 @@ void    look_way(void)
         i++;
     }
     print_tail();
-    print_rooms();
+    // print_rooms();
     print_way();
 }
 
@@ -167,6 +174,7 @@ void    parse_ants(char *str)
         }
         else
         {
+            ft_printf("ANTS no right");
             ft_strdel(&str);
             exit (1);
         }
@@ -174,7 +182,10 @@ void    parse_ants(char *str)
     if (tmp != 0)
         g_info.c_ant = tmp;
     else
+    {
+        ft_printf("NO ANTS");
         exit (1);
+    }
 }
 
 int     check_room(char *str)
