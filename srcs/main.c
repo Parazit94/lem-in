@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 20:05:15 by vferry            #+#    #+#             */
-/*   Updated: 2019/03/28 20:09:18 by vferry           ###   ########.fr       */
+/*   Updated: 2019/03/30 13:29:56 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,19 @@ void    look_way(void)
     int     k;
 
     i = 0;
+    k = 0;
     g_info.tail[i] = g_info.r_end;
     while (g_info.tail[i] >= 0)
     {
         j = 0;
-        k = i;
+        // k = i;
         while (j < g_info.c_room)
         {
             if (g_info.connect[g_info.tail[i]][j] == 1 && j != g_info.r_start && g_info.rooms[j].weight == 0)
             {
                 g_info.connect[j][g_info.tail[i]] = 2;
-                while (g_info.tail[k] != -1)
-                    k++;
+                // while (g_info.tail[k] != -1)
+                k++;
                 g_info.tail[k] = j;
                 g_info.rooms[j].weight = g_info.rooms[g_info.tail[i]].weight + 1;
             }
