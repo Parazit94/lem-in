@@ -6,33 +6,36 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 20:05:15 by vferry            #+#    #+#             */
-/*   Updated: 2019/03/30 17:44:27 by vferry           ###   ########.fr       */
+/*   Updated: 2019/03/30 19:38:09 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem-in.h"
 
-void    print_way(void)
+void    built_all(void)
 {
-    t_ways *lol;
     int     i;
-    int     j;
-    
-    lol = g_info.ways;
-    i = 0;
-    while (lol)
+    t_ways  *all;
+
+    all = g_info.ways;
+    while (all)
     {
-        j = 0;
-        ft_printf("c_room[%d] = %d\n", i, lol->c_rom);
-        while (lol->way[j] != -1)
+        if (g_info.connect[all->way[all->c_rom - 1]][g_info.r_start] != 1 || g_info.connect[g_info.r_start][all->way[all->c_rom - 1]] != 1)
         {
-            ft_printf("room[%d] = %d - ", j, lol->way[j]);
-            ft_printf("%s\t\t", g_info.rooms[lol->way[j]].name);
-            j++;
+            ft_printf("%d\nlast = %d\n\n", all->c_rom, all->way[all->c_rom - 1]);
+            i = 0;
+            while (i < g_info.c_room)
+                if (g_info.connect[i][all->way[all->c_rom - 1]] == 1)
+                {
+                    all->way[all->c_rom] = i;
+                    all->way[all->c_rom + 1] = -1;
+                    all->c_rom++;
+                    break ;
+                }
+                else
+                    i++;
         }
-        ft_printf("\n");
-        lol = lol->next;
-        i++;
+        all = all->next;
     }
 }
 
@@ -51,6 +54,7 @@ void    look_way(void)
     i = 0;
     k = 0;
     g_info.tail[i] = g_info.r_end;
+    g_info.rooms[g_info.r_end].weight = 0;
     g_info.ways = malloc(sizeof(t_ways));
     g_info.ways->way[0] = g_info.tail[i];
     g_info.ways->way[1] = -1;
@@ -62,12 +66,12 @@ void    look_way(void)
     {
         j = 0;
         next = 0;
-        // k = i;
         while (j < g_info.c_room)
         {
             buff = head;
             buff2 = buff;
-            if (g_info.connect[g_info.tail[i]][j] == 1 && j != g_info.r_start && g_info.rooms[j].weight == 0)
+            if (g_info.connect[g_info.tail[i]][j] == 1 && j != g_info.r_start
+            && g_info.rooms[j].weight < g_info.rooms[g_info.tail[i]].weight)
             {
                 next++;
                 if (next >= 2)
@@ -75,7 +79,7 @@ void    look_way(void)
                     while (buff->next)
                         buff = buff->next;
                     while (buff2)
-                        if (buff2->c_rom - 2 >=0 && buff2->way[buff2->c_rom - 2] == g_info.tail[i])
+                        if (buff2->c_rom - 2 >= 0 && buff2->way[buff2->c_rom - 2] == g_info.tail[i])
                             break ;
                         else
                             buff2 = buff2->next;
@@ -105,7 +109,7 @@ void    look_way(void)
                     buff = buff->next;
                 }
                 g_info.connect[j][g_info.tail[i]] = 2;
-                // while (g_info.tail[k] != -1)
+                g_info.connect[g_info.tail[i]][j] = 2;
                 k++;
                 g_info.tail[k] = j;
                 g_info.rooms[j].weight = g_info.rooms[g_info.tail[i]].weight + 1;
@@ -114,8 +118,9 @@ void    look_way(void)
         }
         i++;
     }
+    built_all();
     print_tail();
-    // print_rooms();
+    print_rooms();
     print_way();
 }
 
@@ -271,7 +276,7 @@ void    take_room(char *str, char c)
     }
     g_info.rooms[g_info.c_room].y = tmp;
     g_info.rooms[g_info.c_room].s_or_e = c;
-    g_info.rooms[g_info.c_room].weight = 0;
+    g_info.rooms[g_info.c_room].weight = -1;
     g_info.c_room++;
     ft_strdel(&str);
 }
@@ -464,4 +469,28 @@ void    print_tail(void)
         i++;
     }
     ft_printf("\n\n");
+}
+
+void    print_way(void)
+{
+    t_ways *lol;
+    int     i;
+    int     j;
+    
+    lol = g_info.ways;
+    i = 0;
+    while (lol)
+    {
+        j = 0;
+        ft_printf("c_room[%d] = %d\n", i, lol->c_rom);
+        while (lol->way[j] != -1)
+        {
+            ft_printf("room[%d] = %d - ", j, lol->way[j]);
+            ft_printf("%s\t\t", g_info.rooms[lol->way[j]].name);
+            j++;
+        }
+        ft_printf("\n");
+        lol = lol->next;
+        i++;
+    }
 }

@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 20:05:11 by vferry            #+#    #+#             */
-/*   Updated: 2019/03/30 16:31:19 by vferry           ###   ########.fr       */
+/*   Updated: 2019/03/30 19:24:29 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,5 @@ static t_lem    g_info;
 
 void        print_rooms(void);
 void        print_tail(void);
-
+void        print_way(void);
 #endif
