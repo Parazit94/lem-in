@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 20:05:11 by vferry            #+#    #+#             */
-/*   Updated: 2019/03/30 13:24:11 by vferry           ###   ########.fr       */
+/*   Updated: 2019/03/30 16:31:19 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,11 @@
 
 typedef struct  s_ways
 {
-    int         w;
-    int         way[ROOM];
+    int             w;
+    int             c_rom;
+    int             way[ROOM];
+    struct s_ways   *next;
+    struct s_ways   *prev;
 }               t_ways;
 
 typedef struct  s_room
@@ -44,5 +47,6 @@ typedef struct  s_lem
 static t_lem    g_info;
 
 void        print_rooms(void);
+void        print_tail(void);
 
 #endif
