@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 20:05:15 by vferry            #+#    #+#             */
-/*   Updated: 2019/03/30 19:38:09 by vferry           ###   ########.fr       */
+/*   Updated: 2019/03/30 20:01:00 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void    built_all(void)
     all = g_info.ways;
     while (all)
     {
-        if (g_info.connect[all->way[all->c_rom - 1]][g_info.r_start] != 1 || g_info.connect[g_info.r_start][all->way[all->c_rom - 1]] != 1)
+        if (g_info.connect[all->way[all->c_rom - 1]][g_info.r_start] != 1
+        || g_info.connect[g_info.r_start][all->way[all->c_rom - 1]] != 1)
         {
             ft_printf("%d\nlast = %d\n\n", all->c_rom, all->way[all->c_rom - 1]);
             i = 0;
@@ -71,7 +72,7 @@ void    look_way(void)
             buff = head;
             buff2 = buff;
             if (g_info.connect[g_info.tail[i]][j] == 1 && j != g_info.r_start
-            && g_info.rooms[j].weight < g_info.rooms[g_info.tail[i]].weight)
+            && g_info.rooms[j].weight == -1)
             {
                 next++;
                 if (next >= 2)
