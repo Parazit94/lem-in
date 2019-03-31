@@ -12,7 +12,7 @@ objs/%.o: srcs/%.c
 
 $(NAME): $(OBJS)
 	make -C libft/
-	gcc -o $(NAME) $(OBJS) -I$(INCL) -L libft -lft
+	gcc -O3 -o $(NAME) $(OBJS) -I$(INCL) -L libft -lft
 
 clean:
 	/bin/rm -f $(OBJS)

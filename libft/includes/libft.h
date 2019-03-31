@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vferry <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/28 12:29:41 by vferry            #+#    #+#             */
-/*   Updated: 2018/12/04 19:50:40 by vferry           ###   ########.fr       */
+/*   Updated: 2019/03/31 13:48:50 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <unistd.h>
 # include <sys/types.h>
 # include <sys/uio.h>
-# define BUFF_SIZE 1
+# define BUFF_SIZE 10
 
 size_t			ft_strlen(const char *str);
 char			*ft_strdup(const char *s1);

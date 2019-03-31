@@ -6,13 +6,14 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 20:05:11 by vferry            #+#    #+#             */
-/*   Updated: 2019/03/30 19:24:29 by vferry           ###   ########.fr       */
+/*   Updated: 2019/03/31 16:18:51 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEM_IN_H
 #define LEM_IN_H
 #define ROOM 10000
+#define W2 2
 # include "./../libft/includes/libft.h"
 
 typedef struct  s_ways
@@ -30,7 +31,7 @@ typedef struct  s_room
     int         x;
     int         y;
     char        s_or_e;
-    int         weight;
+    int         weight[2];
 }               t_room;
 
 typedef struct  s_lem
@@ -41,7 +42,11 @@ typedef struct  s_lem
     int         r_end;
     t_room      rooms[ROOM];
     int         tail[ROOM];
-    t_ways      *ways;
+    int         c_ways;
+    t_ways      *w_heap;
+    t_ways      *w_ready;
+    int         c_heap;
+    int         c_ready;
     char        **connect;
 }               t_lem;
 static t_lem    g_info;
@@ -49,4 +54,6 @@ static t_lem    g_info;
 void        print_rooms(void);
 void        print_tail(void);
 void        print_way(void);
+void        print_ways();
+void        ft_error_clean(void);
 #endif
