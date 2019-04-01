@@ -6,11 +6,44 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 20:05:15 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/01 15:13:29 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/01 21:29:05 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem-in.h"
+
+void	push_ants(void)
+{
+	int		i;
+	int		j;
+
+	i = g_info.count_ways - 1;
+	while (i >= 0)
+	{
+		j = 1;
+		while (j < g_info.go_ways[i].w)
+		{
+			if (g_info.rooms[g_info.go_ways[i].way[j]].ant != 0)
+			{
+				g_info.rooms[g_info.go_ways[i].way[j]].ant--;
+				g_info.rooms[g_info.go_ways[i].way[j - 1]].ant++;
+			}
+			j++;
+		}
+		if (i == 0 || g_info.rooms[g_info.r_start].ant >= g_info.go_ways[i].w)
+		{
+			g_info.rooms[g_info.r_start].ant--;
+			g_info.rooms[g_info.go_ways[i].way[j - 1]].ant++;
+		}
+		i--;
+	}
+}
+
+void	walk(void)
+{
+	while (g_info.rooms[g_info.r_end].ant != g_info.c_ant)
+		push_ants();
+}
 
 void	print_touch(void)
 {
@@ -26,6 +59,7 @@ void	print_touch(void)
 			ft_printf("%d\t", g_info.touch[i][j]);
 			j++;
 		}
+		ft_printf("\t%d\t%d", g_info.c_touch[i], g_info.c_average[i]);
 		ft_printf("\n");
 		i++;
 	}
@@ -49,16 +83,117 @@ int		put_in_actual(t_ways *actual, int c_touch)
 	return (0);
 }
 
+void	find_average(void)
+{
+	int		i;
+	int		j;
+	t_ways	*buff;
+	unsigned int	count;
+	int		lol;
+
+	i = 0;
+	g_info.c_average = malloc(sizeof(unsigned int) * g_info.c_ways);
+	while (i < g_info.c_ways)
+	{
+		j = 0;
+		count = 0;
+		lol = 0;
+		buff = g_info.w_ready;
+		while (j < g_info.c_ways)
+		{
+			if (g_info.touch[i][j] == 1)
+				count += buff->w;
+			j++;
+			buff = buff->next;
+		}
+		if ((g_info.c_average[i] = count - (count / g_info.c_touch[i])) == 0)
+			g_info.c_average[i] = count;
+		i++;
+	}
+}
+
+void	print_opt(void)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	while (i < g_info.count_ways)
+	{
+		j = 0;
+		while (j < g_info.go_ways[i].w)
+		{
+			ft_printf("%d\t", g_info.go_ways[i].way[j]);
+			j++;
+		}
+		ft_printf("\n");
+		i++;
+	}
+	ft_printf("\n\n");
+}
+
+void	take_optimal(opt)
+{
+	int		i;
+	int		j;
+	t_ways	*buff;
+
+	g_info.go_ways = malloc(sizeof(t_ways) * g_info.c_touch[opt]);
+	ft_printf("lol = %d\n\n\n\n", g_info.c_touch[opt]);
+	i = 0;
+	j = 0;
+	buff = g_info.w_ready;
+	while (i < g_info.c_ways)
+	{
+		if (g_info.touch[opt][i] == 1)
+		{
+			g_info.go_ways[j] = *buff;
+			j++;
+		}
+		i++;
+		buff = buff->next;
+	}
+	print_opt();
+}
+
+void	find_optimal(void)
+{
+	int		i;
+	int		max;
+	int		opt;
+	int		lol;
+
+	i = 0;
+	max = 0;
+	opt = -1;
+	lol = ROOM;
+	while (i < g_info.c_ways)
+	{
+		if (g_info.c_touch[i] > max && lol > g_info.c_average[i]
+		&& max < g_info.c_ant)
+		{
+			max = g_info.c_touch[i];
+			opt = i;
+		}
+		i++;
+	}
+	g_info.count_ways = g_info.c_touch[opt];
+	ft_printf("opt = %d\n", opt);
+	take_optimal(opt);
+}
+
 void	take_ways(void)
 {
 	t_ways	*buff;
 	t_ways	*actual;
 	int		i;
 	int		j;
+	int		count;
 
 	i = 0;
 	actual = g_info.w_ready;
 	g_info.touch = malloc(sizeof(char * ) * g_info.c_ways);
+	g_info.c_touch = malloc(sizeof(int) * g_info.c_ways);
 	while (i < g_info.c_ways)
 	{
 		j = 0;
@@ -67,7 +202,7 @@ void	take_ways(void)
 		put_in_actual(actual, i);
 		while (buff)
 		{
-			if (buff != actual && put_in_actual(buff, i) == 0)
+			if (buff == actual || put_in_actual(buff, i) == 0)
 				g_info.touch[i][j] = 1;
 			else
 				g_info.touch[i][j] = 0;
@@ -79,6 +214,22 @@ void	take_ways(void)
 		actual = actual->next;
 		i++;
 	}
+	i = 0;
+	while (i < g_info.c_ways)
+	{
+		j = 0;
+		count = 0;
+		while (j < g_info.c_ways)
+		{
+			if (g_info.touch[i][j] == 1)
+				count++;
+			j++;
+		}
+		g_info.c_touch[i] = count;
+		i++;
+	}
+	find_average();
+	find_optimal();
 	// print_touch();
 }
 
@@ -104,7 +255,7 @@ void    print_crowd(void)
 
 void    print_one_way(void)
 {
-	int     i;
+	int		i;
 
 	i = 0;
 	while (i < ROOM && g_info.w_heap->way[i] != -1)
@@ -493,6 +644,7 @@ void    take_room(char *str, char c)
 	g_info.rooms[g_info.c_room].s_or_e = c;
 	g_info.rooms[g_info.c_room].weight[0] = -1;
 	g_info.rooms[g_info.c_room].weight[1] = -1;
+	g_info.rooms[g_info.c_room].ant = 0;
 	g_info.c_room++;
 	ft_strdel(&str);
 }
@@ -603,6 +755,7 @@ void    parsing(void)
 		ft_strdel(&line);
 		ft_error_clean();
 	}
+	g_info.rooms[g_info.r_start].ant = g_info.c_ant;
 	parsing2(line);
 	// print_rooms();
 }
@@ -636,6 +789,7 @@ int main(int argc, char **argv)
 	get_ways();
 	print_ways();
 	take_ways();
+	walk();
 	return (0);
 }
 
