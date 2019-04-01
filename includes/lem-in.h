@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 20:05:11 by vferry            #+#    #+#             */
-/*   Updated: 2019/03/31 16:18:51 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/01 14:55:35 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ typedef struct  s_ways
     int             c_rom;
     int             way[ROOM];
     struct s_ways   *next;
-    struct s_ways   *prev;
+    struct s_ways   *in;
 }               t_ways;
 
 typedef struct  s_room
@@ -32,6 +32,7 @@ typedef struct  s_room
     int         y;
     char        s_or_e;
     int         weight[2];
+    char        *is_touch;
 }               t_room;
 
 typedef struct  s_lem
@@ -45,9 +46,8 @@ typedef struct  s_lem
     int         c_ways;
     t_ways      *w_heap;
     t_ways      *w_ready;
-    int         c_heap;
-    int         c_ready;
     char        **connect;
+    char        **touch;
 }               t_lem;
 static t_lem    g_info;
 

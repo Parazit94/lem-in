@@ -6,11 +6,81 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 20:05:15 by vferry            #+#    #+#             */
-/*   Updated: 2019/03/31 18:02:34 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/01 15:13:29 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem-in.h"
+
+void	print_touch(void)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	while (i < g_info.c_ways)
+	{
+		j = 0;
+		while (j < g_info.c_ways)
+		{
+			ft_printf("%d\t", g_info.touch[i][j]);
+			j++;
+		}
+		ft_printf("\n");
+		i++;
+	}
+}
+
+int		put_in_actual(t_ways *actual, int c_touch)
+{
+	int		i;
+
+	i = 1;
+	while (i < actual->w && actual->way[i] != -1)
+	{
+		if (g_info.rooms[actual->way[i]].is_touch[c_touch] == 0)
+		{
+			g_info.rooms[actual->way[i]].is_touch[c_touch] = 1;
+			i++;
+		}
+		else
+			return (1);
+	}
+	return (0);
+}
+
+void	take_ways(void)
+{
+	t_ways	*buff;
+	t_ways	*actual;
+	int		i;
+	int		j;
+
+	i = 0;
+	actual = g_info.w_ready;
+	g_info.touch = malloc(sizeof(char * ) * g_info.c_ways);
+	while (i < g_info.c_ways)
+	{
+		j = 0;
+		g_info.touch[i] = malloc(sizeof(char) * g_info.c_ways);
+		buff = g_info.w_ready;
+		put_in_actual(actual, i);
+		while (buff)
+		{
+			if (buff != actual && put_in_actual(buff, i) == 0)
+				g_info.touch[i][j] = 1;
+			else
+				g_info.touch[i][j] = 0;
+			if (j < i)
+				g_info.touch[j][i] = g_info.touch[i][j];
+			buff = buff->next;
+			j++;
+		}
+		actual = actual->next;
+		i++;
+	}
+	// print_touch();
+}
 
 void    print_crowd(void)
 {
@@ -93,10 +163,6 @@ void	up_tail(t_ways **head, t_ways *cur)
 		*head = cur;
 	else
 		buff->next = cur;
-	if (*head == g_info.w_ready)
-		g_info.c_ready++;
-	else
-		g_info.c_heap++;
 }
 
 t_ways	*new_way(int from, int weight)
@@ -108,6 +174,7 @@ t_ways	*new_way(int from, int weight)
 	new->way[0] = from;
 	new->way[1] = -1;
 	new->next = NULL;
+	new->in = NULL;
 	return (new);
 }
 
@@ -154,6 +221,7 @@ t_ways	*copy_way(t_ways *buff, int room)
 	}
 	new->way[j] = -1;
 	new->next = NULL;
+	new->in = NULL;
 	return (new);
 }
 
@@ -165,13 +233,18 @@ void	way_built(t_ways *buff)
 	while (i < g_info.c_room)
 	{
 		if (g_info.connect[buff->way[0]][i] > 0 && i != buff->way[0]
-		&& repeat(buff->way, i, buff->w + 1) == 1 && (((g_info.rooms[buff->way[0]].weight[0] >
-		g_info.rooms[i].weight[0] || g_info.rooms[i].weight[1] < W2)
-		&& g_info.rooms[buff->way[0]].weight[0] != -1) || buff->way[0] == g_info.r_start))
+		&& repeat(buff->way, i, buff->w + 1) == 1
+		&& (((g_info.rooms[buff->way[0]].weight[0] > g_info.rooms[i].weight[0]
+		|| g_info.rooms[i].weight[1] < W2)
+		&& g_info.rooms[buff->way[0]].weight[0] != -1)
+		|| buff->way[0] == g_info.r_start))
 		{
 			g_info.rooms[i].weight[1]++;
 			if (i == g_info.r_end)
+			{
 				up_tail(&g_info.w_ready, copy_way(buff, i));
+				g_info.c_ways++;
+			}
 			else
 				up_tail(&g_info.w_heap, copy_way(buff, i));
 		}
@@ -190,15 +263,34 @@ void	for_crowd(void)
 	t_ways	*buff;
 
 	up_tail(&g_info.w_heap, new_way(g_info.r_start, 0));
-	g_info.c_heap++;
 	while (g_info.w_heap)
 	{
 		buff = take_tail(&g_info.w_heap);
-		g_info.c_heap--;
 		if (buff == NULL)
 			ft_error_clean();
 		way_built(buff);
 		way_destroy(buff);
+	}
+	if (g_info.c_ways == 0)
+		ft_error_clean();
+}
+
+void	fresh_ways(void)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	while (i < g_info.c_room)
+	{
+		g_info.rooms[i].is_touch = malloc(sizeof(char) * g_info.c_ways);
+		j = 0;
+		while (j < g_info.c_ways)
+		{
+			g_info.rooms[i].is_touch[j] = 0;
+			j++;
+		}
+		i++;
 	}
 }
 
@@ -207,7 +299,10 @@ void    get_ways(void)
 	if (g_info.c_ant < 2)
 		for_one();
 	else
+	{
 		for_crowd();
+		fresh_ways();
+	}
 }
 
 
@@ -519,8 +614,7 @@ void    init(void)
 	i = 0;
 	g_info.connect = NULL;
 	g_info.c_room = 0;
-	g_info.c_heap = 0;
-	g_info.c_ready = 0;
+	g_info.c_ways = 0;
 	while (i < ROOM)
 	{
 		g_info.tail[i] = -1;
@@ -541,6 +635,7 @@ int main(int argc, char **argv)
 	look_way();
 	get_ways();
 	print_ways();
+	take_ways();
 	return (0);
 }
 
