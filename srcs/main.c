@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 20:05:15 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/03 14:05:01 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/03 14:21:37 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void	push_ants(void)
 			j++;
 		}
 		if ((i == 0 || g_info.rooms[g_info.r_start].ant >= g_info.go_ways[i].w ||
-		(g_info.rooms[g_info.r_start].ant + g_info.go_ways[0].w) >= g_info.go_ways[i].w)
-		&& g_info.rooms[g_info.r_start].ant != 0)
+		(g_info.rooms[g_info.r_start].ant + g_info.go_ways[0].w - 1) >= g_info.go_ways[i].w)
+		&& g_info.rooms[g_info.r_start].ant > 0)
 		{
 			g_info.rooms[g_info.r_start].ant--;
 			g_info.num_ants++;
@@ -206,6 +206,8 @@ void	take_ways(void)
 	int		count;
 
 	i = 0;
+	if (g_info.c_ant == 1)
+		return ;
 	actual = g_info.w_ready;
 	g_info.touch = malloc(sizeof(char * ) * g_info.c_ways);
 	g_info.c_touch = malloc(sizeof(int) * g_info.c_ways);
@@ -273,7 +275,8 @@ void    print_one_way(void)
 	int		i;
 
 	i = 0;
-	while (i < ROOM && g_info.w_ready->way[i] != -1)
+	ft_printf("w = %d\n", g_info.w_ready->w);
+	while (i < g_info.w_ready->w + 1 && g_info.w_ready->way[i] != -1)
 	{
 		ft_printf("name = %s\n", g_info.rooms[g_info.w_ready->way[i]].name);
 		i++;
@@ -315,6 +318,7 @@ void	for_one1(void)
 		j++;
 	}
 	g_info.go_ways = g_info.w_ready;
+	g_info.count_ways = 1;
 	free(g_info.w_heap);
 }
 
