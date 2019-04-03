@@ -1,25 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/28 20:05:15 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/03 16:16:14 by vferry           ###   ########.fr       */
+/*   Created: 2019/04/03 15:46:58 by vferry            #+#    #+#             */
+/*   Updated: 2019/04/03 15:47:39 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int main(int argc, char **argv)
+void    ft_clean_con(char **arr)
 {
-	init();
-	parsing();
-	look_way();
-	get_ways();
-	// print_ways();
-	take_ways();
-	walk();
-	return (0);
+	int     i;
+
+	i = 0;
+	while (i < g_inf.c_room)
+	{
+		ft_strdel(&arr[i]);
+		i++;
+	}
+	free(arr);
+}
+
+void    ft_error_clean(void)
+{
+	t_room  *buff;
+	int     i;
+
+	i = 0;
+	if (g_inf.connect)
+		ft_clean_con(g_inf.connect);
+	while (i < ROOM && g_inf.rooms[i].name)
+	{
+		free(g_inf.rooms[i].name);
+		i++;
+	}
+	ft_printf("ERROR");
+	exit (1);
 }

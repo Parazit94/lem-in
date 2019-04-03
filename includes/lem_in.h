@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 20:05:11 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/03 15:27:59 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/03 16:19:52 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,60 @@ typedef struct  s_lem
 }               t_lem;
 t_lem    g_inf;
 
+void    init(void);
+//Print_res
+void	walk(void);
+
+//Optimal
+int		put_in_actual(t_ways *actual, int c_touch);
+void	find_average(void);
+void	take_optimal(int opt);
+void	find_optimal(void);
+
+//Building 1, 2, 3
+void	fresh_ways(void);
+void    get_ways(void);
+void    look_way(void);
+void	for_crowd(void);
+void    for_one(void);
+//////////////////////
+void	up_tail(t_ways **head, t_ways *cur);
+t_ways	*new_way(int from, int weight);
+t_ways	*take_tail(t_ways **head);
+t_ways	*copy_way(t_ways *buff, int room);
+void	way_built(t_ways *buff);
+//////////////////////
+void	take_ways(void);
+void	for_one1(void);
+
+//Helper
+char    *lem_split(char *line, char c);
+int		number(char c);
+int     check_room(char *str);
+void    create_con(void);
+void	way_destroy(t_ways *buff);
+int     less_weight(int src);
+int		repeat(int *way, int room, int size);
+
+//Taking
+void    take_con(char *line);
+void    take_room(char *str, char c);
+
+//Parsing
+void    parsing2(char *line);
+void    parsing(void);
+
+//Clean
+void    ft_clean_con(char **arr);
+void        ft_error_clean(void);
+
+//Не нужны
+void    print_one_way(void);
+void    print_crowd(void);
+void	print_touch(void);
+void	print_opt(void);
 void        print_rooms(void);
 void        print_tail(void);
 void        print_way(void);
 void        print_ways();
-void        ft_error_clean(void);
 #endif
