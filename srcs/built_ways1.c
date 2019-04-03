@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 15:50:15 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/03 16:29:47 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/03 21:11:45 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,12 @@ void	for_crowd(void)
 	{
 		buff = take_tail(&g_inf.w_heap);
 		if (buff == NULL)
-			ft_error_clean();
+			ft_clean("No way to end!", 1);
 		way_built(buff);
 		way_destroy(buff);
 	}
 	if (g_inf.c_ways == 0)
-		ft_error_clean();
+		ft_clean("No way to end!", 1);
 }
 
 void	for_one(void)

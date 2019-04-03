@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 15:43:46 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/03 18:42:32 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/03 21:12:38 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void		take_con(char *line)
 	ft_strdel(&buff[1]);
 	free(buff);
 	if (one == -1 || two == -1)
-		ft_error_clean();
+		ft_clean("Сonnection to a non-existent room", 1);
 	g_inf.connect[one][two] = 1;
 	g_inf.connect[two][one] = 1;
 	ft_strdel(&line);
@@ -68,7 +68,7 @@ void		take_room(char *str, char c, int tmp)
 
 	g_inf.rooms[g_inf.c_room].name = lem_split(str, ' ');
 	if (!(buff = ft_strchr(str, ' ')))
-		ft_error_clean();
+		ft_clean("Room have not x or y, or they are invalid", 1);
 	buff++;
 	i = -1;
 	while (buff[++i])
@@ -83,7 +83,7 @@ void		take_room(char *str, char c, int tmp)
 		else
 		{
 			ft_strdel(&str);
-			ft_error_clean();
+			ft_clean("Room's X or Y is invalid", 1);
 		}
 	put_in_room(&tmp, c, 0);
 	ft_strdel(&str);

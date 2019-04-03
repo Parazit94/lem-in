@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 16:07:22 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/03 16:31:25 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/03 21:02:07 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ t_ways	*new_way(int from, int weight)
 	new->way[0] = from;
 	new->way[1] = -1;
 	new->next = NULL;
-	new->in = NULL;
 	return (new);
 }
 
@@ -70,7 +69,6 @@ t_ways	*copy_way(t_ways *buff, int room)
 	}
 	new->way[j] = -1;
 	new->next = NULL;
-	new->in = NULL;
 	return (new);
 }
 

@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 15:42:46 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/03 18:41:36 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/03 21:13:07 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ static void	parse_ants(char *str)
 		else
 		{
 			ft_strdel(&str);
-			exit(1);
+			ft_clean("Not ants", 1);
 		}
 	ft_strdel(&str);
 	if (tmp != 0)
 		g_inf.c_ant = tmp;
 	else
-		exit(1);
+		ft_clean("Not ants", 1);
 }
 
 void		parsing3(char *line, char c)
@@ -100,7 +100,7 @@ void		parsing(void)
 	if (g_inf.r_end == -1 || g_inf.r_start == -1)
 	{
 		ft_strdel(&line);
-		ft_error_clean();
+		ft_clean("No start or end", 1);
 	}
 	g_inf.rooms[g_inf.r_start].ant = g_inf.c_ant;
 	parsing2(line);

@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 20:05:15 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/03 17:02:14 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/03 21:12:15 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,6 @@ int	main(int argc, char **argv)
 	// print_ways();
 	take_ways();
 	walk();
+	ft_clean(NULL, 0);
 	return (0);
 }

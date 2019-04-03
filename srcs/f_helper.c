@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 15:47:49 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/03 17:00:15 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/03 21:12:01 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int		check_room(char *str)
 			if (p > 2)
 			{
 				ft_strdel(&str);
-				ft_error_clean();
+				ft_clean("Room not right", 1);
 			}
 		}
 	return (0);

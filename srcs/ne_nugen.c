@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ne_nugen.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/03 21:16:00 by vferry            #+#    #+#             */
+/*   Updated: 2019/04/03 21:18:39 by vferry           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lem_in.h"
 
-void    print_one_way(void)
+void	print_one_way(void)
 {
 	int		i;
 
@@ -13,10 +25,10 @@ void    print_one_way(void)
 	}
 }
 
-void    print_crowd(void)
+void	print_crowd(void)
 {
-	int     i;
-	int     j;
+	int		i;
+	int		j;
 
 	i = 0;
 	while (i < g_inf.c_ways)
@@ -96,15 +108,16 @@ void	print_ways()
 	ft_printf("c_ways = %d\n", j);
 }
 
-void    print_rooms(void)
+void	print_rooms(void)
 {
-	int     i;
-	int     j;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;
 	ft_printf("ants = %d\n", g_inf.c_ant);
-	ft_printf("c_room = %d\nr_st = %d\tr_end = %d\n", g_inf.c_room, g_inf.r_start, g_inf.r_end);
+	ft_printf("c_room = %d\nr_st = %d\tr_end = %d\n", g_inf.c_room, g_inf.r_start,
+	g_inf.r_end);
 	while (i < ROOM && g_inf.rooms[i].name != NULL)
 	{
 		ft_printf("name = %s\nx = %d\ty = %d\tind = %d\tweight = %d\n",
@@ -116,7 +129,6 @@ void    print_rooms(void)
 	ft_printf("\t");
 	while (i < g_inf.c_room)
 	{
-
 		j = 0;
 		while (j < g_inf.c_room && i == 0)
 		{
@@ -134,14 +146,13 @@ void    print_rooms(void)
 			j++;
 		}
 		ft_printf("\n");
-		
 		i++;
 	}
 }
 
-void    print_tail(void)
+void	print_tail(void)
 {
-	int     i;
+	int		i;
 
 	i = 0;
 	ft_printf("\n\ntail = \t");
@@ -153,12 +164,12 @@ void    print_tail(void)
 	ft_printf("\n\n");
 }
 
-void    print_way(void)
+void	print_way(void)
 {
-	t_ways *lol;
-	int     i;
-	int     j;
-	
+	t_ways	*lol;
+	int		i;
+	int		j;
+
 	lol = g_inf.w_heap;
 	i = 0;
 	while (lol)
