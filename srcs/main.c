@@ -6,11 +6,16 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 20:05:15 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/01 21:29:05 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/03 14:05:01 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem-in.h"
+
+void	print_ants(int ant, char *room)
+{
+	ft_printf("L%d-%s ", ant, room);
+}
 
 void	push_ants(void)
 {
@@ -27,16 +32,27 @@ void	push_ants(void)
 			{
 				g_info.rooms[g_info.go_ways[i].way[j]].ant--;
 				g_info.rooms[g_info.go_ways[i].way[j - 1]].ant++;
+				g_info.rooms[g_info.go_ways[i].way[j - 1]].num_ant = g_info.rooms[g_info.go_ways[i].way[j]].num_ant;
+				g_info.rooms[g_info.go_ways[i].way[j]].num_ant = 0;
+				print_ants(g_info.rooms[g_info.go_ways[i].way[j - 1]].num_ant,
+				g_info.rooms[g_info.go_ways[i].way[j - 1]].name);
 			}
 			j++;
 		}
-		if (i == 0 || g_info.rooms[g_info.r_start].ant >= g_info.go_ways[i].w)
+		if ((i == 0 || g_info.rooms[g_info.r_start].ant >= g_info.go_ways[i].w ||
+		(g_info.rooms[g_info.r_start].ant + g_info.go_ways[0].w) >= g_info.go_ways[i].w)
+		&& g_info.rooms[g_info.r_start].ant != 0)
 		{
 			g_info.rooms[g_info.r_start].ant--;
+			g_info.num_ants++;
 			g_info.rooms[g_info.go_ways[i].way[j - 1]].ant++;
+			g_info.rooms[g_info.go_ways[i].way[j - 1]].num_ant = g_info.num_ants;
+			print_ants(g_info.rooms[g_info.go_ways[i].way[j - 1]].num_ant,
+			g_info.rooms[g_info.go_ways[i].way[j - 1]].name);
 		}
 		i--;
 	}
+	ft_printf("\n");
 }
 
 void	walk(void)
@@ -139,7 +155,6 @@ void	take_optimal(opt)
 	t_ways	*buff;
 
 	g_info.go_ways = malloc(sizeof(t_ways) * g_info.c_touch[opt]);
-	ft_printf("lol = %d\n\n\n\n", g_info.c_touch[opt]);
 	i = 0;
 	j = 0;
 	buff = g_info.w_ready;
@@ -153,7 +168,7 @@ void	take_optimal(opt)
 		i++;
 		buff = buff->next;
 	}
-	print_opt();
+	// print_opt();
 }
 
 void	find_optimal(void)
@@ -178,7 +193,7 @@ void	find_optimal(void)
 		i++;
 	}
 	g_info.count_ways = g_info.c_touch[opt];
-	ft_printf("opt = %d\n", opt);
+	// ft_printf("opt = %d\n", opt);
 	take_optimal(opt);
 }
 
@@ -258,9 +273,9 @@ void    print_one_way(void)
 	int		i;
 
 	i = 0;
-	while (i < ROOM && g_info.w_heap->way[i] != -1)
+	while (i < ROOM && g_info.w_ready->way[i] != -1)
 	{
-		ft_printf("name = %s\n", g_info.rooms[g_info.w_heap->way[i]].name);
+		ft_printf("name = %s\n", g_info.rooms[g_info.w_ready->way[i]].name);
 		i++;
 	}
 }
@@ -284,6 +299,25 @@ int     less_weight(int src)
 	return (dst);
 }
 
+void	for_one1(void)
+{
+	int		i;
+	int		j;
+
+	g_info.w_ready = malloc(sizeof(t_ways));
+	g_info.w_ready->w = g_info.w_heap->w;
+	i = g_info.w_ready->w;
+	j = 0;
+	while (i > 0)
+	{
+		g_info.w_ready->way[j] = g_info.w_heap->way[i];
+		i--;
+		j++;
+	}
+	g_info.go_ways = g_info.w_ready;
+	free(g_info.w_heap);
+}
+
 void    for_one(void)
 {
 	int     dst;
@@ -296,9 +330,11 @@ void    for_one(void)
 	{
 		g_info.w_heap->way[g_info.w_heap->c_rom] = dst;
 		g_info.w_heap->c_rom++;
+		g_info.w_heap->w++;
 	}
 	g_info.w_heap->way[g_info.w_heap->c_rom] = -1;
-	print_one_way();
+	for_one1();
+	// print_one_way();
 }
 
 void	up_tail(t_ways **head, t_ways *cur)
@@ -645,6 +681,7 @@ void    take_room(char *str, char c)
 	g_info.rooms[g_info.c_room].weight[0] = -1;
 	g_info.rooms[g_info.c_room].weight[1] = -1;
 	g_info.rooms[g_info.c_room].ant = 0;
+	g_info.rooms[g_info.c_room].num_ant = -1;
 	g_info.c_room++;
 	ft_strdel(&str);
 }
@@ -768,6 +805,7 @@ void    init(void)
 	g_info.connect = NULL;
 	g_info.c_room = 0;
 	g_info.c_ways = 0;
+	g_info.num_ants = 0;
 	while (i < ROOM)
 	{
 		g_info.tail[i] = -1;
@@ -787,7 +825,7 @@ int main(int argc, char **argv)
 	parsing();
 	look_way();
 	get_ways();
-	print_ways();
+	// print_ways();
 	take_ways();
 	walk();
 	return (0);
