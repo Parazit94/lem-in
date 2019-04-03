@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 16:11:22 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/03 16:12:29 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/03 17:02:50 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ int		put_in_actual(t_ways *actual, int c_touch)
 
 void	find_average(void)
 {
-	int		i;
-	int		j;
-	t_ways	*buff;
+	int				i;
+	int				j;
+	t_ways			*buff;
 	unsigned int	count;
-	int		lol;
+	int				lol;
 
 	i = 0;
 	g_inf.c_average = malloc(sizeof(unsigned int) * g_inf.c_ways);

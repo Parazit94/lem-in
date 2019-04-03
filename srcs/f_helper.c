@@ -6,17 +6,17 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 15:47:49 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/03 16:14:48 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/03 17:00:15 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-char    *lem_split(char *line, char c)
+char	*lem_split(char *line, char c)
 {
-	int     i;
-	int     j;
-	char    *str;
+	int		i;
+	int		j;
+	char	*str;
 
 	i = 0;
 	j = 0;
@@ -37,10 +37,10 @@ int		number(char c)
 	return (!(c >= 48 && c <= 57));
 }
 
-int     check_room(char *str)
+int		check_room(char *str)
 {
-	int     i;
-	int     p;
+	int	i;
+	int	p;
 
 	i = 0;
 	p = 0;
@@ -51,7 +51,7 @@ int     check_room(char *str)
 		check_room(str);
 	}
 	else
-		while (str[i])
+		while (str[i++])
 		{
 			if (str[i] == '-')
 				return (1);
@@ -62,15 +62,14 @@ int     check_room(char *str)
 				ft_strdel(&str);
 				ft_error_clean();
 			}
-			i++;
-	   }
+		}
 	return (0);
 }
 
-void    create_con(void)
+void	create_con(void)
 {
-	int     i;
-	int     j;
+	int	i;
+	int	j;
 
 	i = 0;
 	g_inf.connect = malloc(sizeof(char *) * g_inf.c_room);

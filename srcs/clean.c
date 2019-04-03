@@ -6,15 +6,15 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 15:46:58 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/03 15:47:39 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/03 16:47:24 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void    ft_clean_con(char **arr)
+void	ft_clean_con(char **arr)
 {
-	int     i;
+	int	i;
 
 	i = 0;
 	while (i < g_inf.c_room)
@@ -25,10 +25,10 @@ void    ft_clean_con(char **arr)
 	free(arr);
 }
 
-void    ft_error_clean(void)
+void	ft_error_clean(void)
 {
-	t_room  *buff;
-	int     i;
+	t_room	*buff;
+	int		i;
 
 	i = 0;
 	if (g_inf.connect)
@@ -39,5 +39,5 @@ void    ft_error_clean(void)
 		i++;
 	}
 	ft_printf("ERROR");
-	exit (1);
+	exit(1);
 }

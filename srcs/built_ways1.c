@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 15:50:15 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/03 16:06:52 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/03 16:29:47 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	fresh_ways(void)
 	}
 }
 
-void    get_ways(void)
+void	get_ways(void)
 {
 	if (g_inf.c_ant < 2)
 		for_one();
@@ -42,16 +42,14 @@ void    get_ways(void)
 	}
 }
 
-void    look_way(void)
+void	look_way(void)
 {
-	int     i;
-	int     j;
-	int     k;
+	int		i;
+	int		j;
+	int		k;
 
 	i = 0;
 	k = 0;
-	g_inf.tail[i] = g_inf.r_end;
-	g_inf.rooms[g_inf.r_end].weight[0] = 0;
 	while (g_inf.tail[i] >= 0)
 	{
 		j = 0;
@@ -64,15 +62,13 @@ void    look_way(void)
 				g_inf.connect[g_inf.tail[i]][j] = 2;
 				k++;
 				g_inf.tail[k] = j;
-				g_inf.rooms[j].weight[0] = g_inf.rooms[g_inf.tail[i]].weight[0] + 1;
+				g_inf.rooms[j].weight[0] =
+				g_inf.rooms[g_inf.tail[i]].weight[0] + 1;
 			}
 			j++;
 		}
 		i++;
 	}
-	// print_tail();
-	// print_rooms();
-	print_way();
 }
 
 void	for_crowd(void)
@@ -92,9 +88,9 @@ void	for_crowd(void)
 		ft_error_clean();
 }
 
-void    for_one(void)
+void	for_one(void)
 {
-	int     dst;
+	int		dst;
 
 	g_inf.w_heap = malloc(sizeof(t_ways));
 	g_inf.w_heap->way[0] = g_inf.r_start;

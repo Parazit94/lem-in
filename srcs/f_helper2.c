@@ -6,16 +6,16 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 16:15:08 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/03 16:15:43 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/03 17:01:11 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int     less_weight(int src)
+int		less_weight(int src)
 {
-	int     dst;
-	int     i;
+	int	dst;
+	int	i;
 
 	i = 0;
 	dst = src;
@@ -33,7 +33,7 @@ int     less_weight(int src)
 
 int		repeat(int *way, int room, int size)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < size)

@@ -6,16 +6,16 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 15:42:46 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/03 15:46:27 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/03 18:41:36 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static void    parse_ants(char *str)
+static void	parse_ants(char *str)
 {
-	int     i;
-	int     tmp;
+	int	i;
+	int	tmp;
 
 	i = 0;
 	tmp = 0;
@@ -29,21 +29,35 @@ static void    parse_ants(char *str)
 		}
 		else
 		{
-			ft_printf("Count of ANTS is't right");
 			ft_strdel(&str);
-			exit (1);
+			exit(1);
 		}
 	ft_strdel(&str);
 	if (tmp != 0)
 		g_inf.c_ant = tmp;
 	else
+		exit(1);
+}
+
+void		parsing3(char *line, char c)
+{
+	if (c == 1)
 	{
-		ft_printf("NO ANTS");
-		exit (1);
+		ft_strdel(&line);
+		get_next_line(0, &line);
+		g_inf.r_start = g_inf.c_room;
+		take_room(line, 1, 0);
+	}
+	else
+	{
+		ft_strdel(&line);
+		get_next_line(0, &line);
+		g_inf.r_end = g_inf.c_room;
+		take_room(line, 2, 0);
 	}
 }
 
-void    parsing2(char *line)
+void		parsing2(char *line)
 {
 	if (!line)
 		return ;
@@ -59,33 +73,21 @@ void    parsing2(char *line)
 		if (line)
 			take_con(line);
 	}
+	g_inf.tail[0] = g_inf.r_end;
+	g_inf.rooms[g_inf.r_end].weight[0] = 0;
 }
 
-void    parsing(void)
+void		parsing(void)
 {
-	char    *line;
-	int     i;
+	char	*line;
 
-	i = 0;
 	get_next_line(0, &line);
 	parse_ants(line);
 	while (get_next_line(0, &line) > 0)
 		if (ft_strcmp(line, "##start") == 0)
-		{
-			ft_strdel(&line);
-			get_next_line(0, &line);
-			g_inf.r_start = g_inf.c_room;
-			take_room(line, 1);
-			i++;
-		}
+			parsing3(line, 1);
 		else if (ft_strcmp(line, "##end") == 0)
-		{
-			ft_strdel(&line);
-			get_next_line(0, &line);
-			g_inf.r_end = g_inf.c_room;
-			take_room(line, 2);
-			i++;
-		}
+			parsing3(line, 2);
 		else if (line[0] == '#')
 		{
 			ft_strdel(&line);
@@ -94,13 +96,12 @@ void    parsing(void)
 		else if (check_room(line) == 1)
 			break ;
 		else
-			take_room(line, 0);
-	if (i != 2)
+			take_room(line, 0, 0);
+	if (g_inf.r_end == -1 || g_inf.r_start == -1)
 	{
 		ft_strdel(&line);
 		ft_error_clean();
 	}
 	g_inf.rooms[g_inf.r_start].ant = g_inf.c_ant;
 	parsing2(line);
-	// print_rooms();
 }

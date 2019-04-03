@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 20:05:11 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/03 16:19:52 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/03 18:40:57 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int		repeat(int *way, int room, int size);
 
 //Taking
 void    take_con(char *line);
-void    take_room(char *str, char c);
+void    take_room(char *str, char c, int i);
 
 //Parsing
 void    parsing2(char *line);

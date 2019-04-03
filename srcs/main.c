@@ -6,13 +6,13 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 20:05:15 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/03 16:16:14 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/03 17:02:14 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	init();
 	parsing();

@@ -6,18 +6,18 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 15:43:46 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/03 15:45:20 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/03 18:42:32 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void    take_con(char *line)
+void		take_con(char *line)
 {
-	char    **buff;
-	int     i;
-	int     one;
-	int     two;
+	char	**buff;
+	int		i;
+	int		one;
+	int		two;
 
 	buff = ft_strsplit(line, '-');
 	i = 0;
@@ -41,22 +41,37 @@ void    take_con(char *line)
 	ft_strdel(&line);
 }
 
-void    take_room(char *str, char c)
+static void	put_in_room(int *a, char c, char lol)
 {
-	char    *buff;
-	int     tmp;
-	int     i;
+	int		tmp;
 
-	if (!(str))
-		return ;
+	tmp = *a;
+	if (lol == 1)
+		g_inf.rooms[g_inf.c_room].x = tmp;
+	else
+	{
+		g_inf.rooms[g_inf.c_room].y = tmp;
+		g_inf.rooms[g_inf.c_room].s_or_e = c;
+		g_inf.rooms[g_inf.c_room].weight[0] = -1;
+		g_inf.rooms[g_inf.c_room].weight[1] = -1;
+		g_inf.rooms[g_inf.c_room].ant = 0;
+		g_inf.rooms[g_inf.c_room].num_ant = -1;
+		g_inf.c_room++;
+	}
+	a = 0;
+}
+
+void		take_room(char *str, char c, int tmp)
+{
+	char	*buff;
+	int		i;
+
 	g_inf.rooms[g_inf.c_room].name = lem_split(str, ' ');
 	if (!(buff = ft_strchr(str, ' ')))
 		ft_error_clean();
 	buff++;
-	tmp = 0;
-	i = 0;
-	while (buff[i])
-	{
+	i = -1;
+	while (buff[++i])
 		if (number(buff[i]) == 0)
 		{
 			tmp += buff[i] - 48;
@@ -64,20 +79,12 @@ void    take_room(char *str, char c)
 				tmp *= 10;
 		}
 		else if (buff[i] == ' ')
-		{
-			g_inf.rooms[g_inf.c_room].x = tmp;
-			tmp = 0;
-		}
+			put_in_room(&tmp, c, 1);
 		else
+		{
+			ft_strdel(&str);
 			ft_error_clean();
-		i++;
-	}
-	g_inf.rooms[g_inf.c_room].y = tmp;
-	g_inf.rooms[g_inf.c_room].s_or_e = c;
-	g_inf.rooms[g_inf.c_room].weight[0] = -1;
-	g_inf.rooms[g_inf.c_room].weight[1] = -1;
-	g_inf.rooms[g_inf.c_room].ant = 0;
-	g_inf.rooms[g_inf.c_room].num_ant = -1;
-	g_inf.c_room++;
+		}
+	put_in_room(&tmp, c, 0);
 	ft_strdel(&str);
 }

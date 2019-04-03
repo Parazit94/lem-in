@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 16:07:22 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/03 16:08:54 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/03 16:31:25 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_ways	*take_tail(t_ways **head)
 
 t_ways	*copy_way(t_ways *buff, int room)
 {
-	t_ways *new;
+	t_ways	*new;
 	int		i;
 	int		j;
 
