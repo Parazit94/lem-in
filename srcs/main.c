@@ -6,11 +6,11 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 20:05:15 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/03 14:21:37 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/03 15:28:00 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
 void	print_ants(int ant, char *room)
 {
@@ -22,33 +22,33 @@ void	push_ants(void)
 	int		i;
 	int		j;
 
-	i = g_info.count_ways - 1;
+	i = g_inf.count_ways - 1;
 	while (i >= 0)
 	{
 		j = 1;
-		while (j < g_info.go_ways[i].w)
+		while (j < g_inf.go_ways[i].w)
 		{
-			if (g_info.rooms[g_info.go_ways[i].way[j]].ant != 0)
+			if (g_inf.rooms[g_inf.go_ways[i].way[j]].ant != 0)
 			{
-				g_info.rooms[g_info.go_ways[i].way[j]].ant--;
-				g_info.rooms[g_info.go_ways[i].way[j - 1]].ant++;
-				g_info.rooms[g_info.go_ways[i].way[j - 1]].num_ant = g_info.rooms[g_info.go_ways[i].way[j]].num_ant;
-				g_info.rooms[g_info.go_ways[i].way[j]].num_ant = 0;
-				print_ants(g_info.rooms[g_info.go_ways[i].way[j - 1]].num_ant,
-				g_info.rooms[g_info.go_ways[i].way[j - 1]].name);
+				g_inf.rooms[g_inf.go_ways[i].way[j]].ant--;
+				g_inf.rooms[g_inf.go_ways[i].way[j - 1]].ant++;
+				g_inf.rooms[g_inf.go_ways[i].way[j - 1]].num_ant = g_inf.rooms[g_inf.go_ways[i].way[j]].num_ant;
+				g_inf.rooms[g_inf.go_ways[i].way[j]].num_ant = 0;
+				print_ants(g_inf.rooms[g_inf.go_ways[i].way[j - 1]].num_ant,
+				g_inf.rooms[g_inf.go_ways[i].way[j - 1]].name);
 			}
 			j++;
 		}
-		if ((i == 0 || g_info.rooms[g_info.r_start].ant >= g_info.go_ways[i].w ||
-		(g_info.rooms[g_info.r_start].ant + g_info.go_ways[0].w - 1) >= g_info.go_ways[i].w)
-		&& g_info.rooms[g_info.r_start].ant > 0)
+		if ((i == 0 || g_inf.rooms[g_inf.r_start].ant >= g_inf.go_ways[i].w ||
+		(g_inf.rooms[g_inf.r_start].ant + g_inf.go_ways[0].w - 1) >= g_inf.go_ways[i].w)
+		&& g_inf.rooms[g_inf.r_start].ant > 0)
 		{
-			g_info.rooms[g_info.r_start].ant--;
-			g_info.num_ants++;
-			g_info.rooms[g_info.go_ways[i].way[j - 1]].ant++;
-			g_info.rooms[g_info.go_ways[i].way[j - 1]].num_ant = g_info.num_ants;
-			print_ants(g_info.rooms[g_info.go_ways[i].way[j - 1]].num_ant,
-			g_info.rooms[g_info.go_ways[i].way[j - 1]].name);
+			g_inf.rooms[g_inf.r_start].ant--;
+			g_inf.num_ants++;
+			g_inf.rooms[g_inf.go_ways[i].way[j - 1]].ant++;
+			g_inf.rooms[g_inf.go_ways[i].way[j - 1]].num_ant = g_inf.num_ants;
+			print_ants(g_inf.rooms[g_inf.go_ways[i].way[j - 1]].num_ant,
+			g_inf.rooms[g_inf.go_ways[i].way[j - 1]].name);
 		}
 		i--;
 	}
@@ -57,7 +57,7 @@ void	push_ants(void)
 
 void	walk(void)
 {
-	while (g_info.rooms[g_info.r_end].ant != g_info.c_ant)
+	while (g_inf.rooms[g_inf.r_end].ant != g_inf.c_ant)
 		push_ants();
 }
 
@@ -67,15 +67,15 @@ void	print_touch(void)
 	int		j;
 
 	i = 0;
-	while (i < g_info.c_ways)
+	while (i < g_inf.c_ways)
 	{
 		j = 0;
-		while (j < g_info.c_ways)
+		while (j < g_inf.c_ways)
 		{
-			ft_printf("%d\t", g_info.touch[i][j]);
+			ft_printf("%d\t", g_inf.touch[i][j]);
 			j++;
 		}
-		ft_printf("\t%d\t%d", g_info.c_touch[i], g_info.c_average[i]);
+		ft_printf("\t%d\t%d", g_inf.c_touch[i], g_inf.c_average[i]);
 		ft_printf("\n");
 		i++;
 	}
@@ -88,9 +88,9 @@ int		put_in_actual(t_ways *actual, int c_touch)
 	i = 1;
 	while (i < actual->w && actual->way[i] != -1)
 	{
-		if (g_info.rooms[actual->way[i]].is_touch[c_touch] == 0)
+		if (g_inf.rooms[actual->way[i]].is_touch[c_touch] == 0)
 		{
-			g_info.rooms[actual->way[i]].is_touch[c_touch] = 1;
+			g_inf.rooms[actual->way[i]].is_touch[c_touch] = 1;
 			i++;
 		}
 		else
@@ -108,22 +108,22 @@ void	find_average(void)
 	int		lol;
 
 	i = 0;
-	g_info.c_average = malloc(sizeof(unsigned int) * g_info.c_ways);
-	while (i < g_info.c_ways)
+	g_inf.c_average = malloc(sizeof(unsigned int) * g_inf.c_ways);
+	while (i < g_inf.c_ways)
 	{
 		j = 0;
 		count = 0;
 		lol = 0;
-		buff = g_info.w_ready;
-		while (j < g_info.c_ways)
+		buff = g_inf.w_ready;
+		while (j < g_inf.c_ways)
 		{
-			if (g_info.touch[i][j] == 1)
+			if (g_inf.touch[i][j] == 1)
 				count += buff->w;
 			j++;
 			buff = buff->next;
 		}
-		if ((g_info.c_average[i] = count - (count / g_info.c_touch[i])) == 0)
-			g_info.c_average[i] = count;
+		if ((g_inf.c_average[i] = count - (count / g_inf.c_touch[i])) == 0)
+			g_inf.c_average[i] = count;
 		i++;
 	}
 }
@@ -134,12 +134,12 @@ void	print_opt(void)
 	int		j;
 
 	i = 0;
-	while (i < g_info.count_ways)
+	while (i < g_inf.count_ways)
 	{
 		j = 0;
-		while (j < g_info.go_ways[i].w)
+		while (j < g_inf.go_ways[i].w)
 		{
-			ft_printf("%d\t", g_info.go_ways[i].way[j]);
+			ft_printf("%d\t", g_inf.go_ways[i].way[j]);
 			j++;
 		}
 		ft_printf("\n");
@@ -154,15 +154,15 @@ void	take_optimal(opt)
 	int		j;
 	t_ways	*buff;
 
-	g_info.go_ways = malloc(sizeof(t_ways) * g_info.c_touch[opt]);
+	g_inf.go_ways = malloc(sizeof(t_ways) * g_inf.c_touch[opt]);
 	i = 0;
 	j = 0;
-	buff = g_info.w_ready;
-	while (i < g_info.c_ways)
+	buff = g_inf.w_ready;
+	while (i < g_inf.c_ways)
 	{
-		if (g_info.touch[opt][i] == 1)
+		if (g_inf.touch[opt][i] == 1)
 		{
-			g_info.go_ways[j] = *buff;
+			g_inf.go_ways[j] = *buff;
 			j++;
 		}
 		i++;
@@ -182,17 +182,17 @@ void	find_optimal(void)
 	max = 0;
 	opt = -1;
 	lol = ROOM;
-	while (i < g_info.c_ways)
+	while (i < g_inf.c_ways)
 	{
-		if (g_info.c_touch[i] > max && lol > g_info.c_average[i]
-		&& max < g_info.c_ant)
+		if (g_inf.c_touch[i] > max && lol > g_inf.c_average[i]
+		&& max < g_inf.c_ant)
 		{
-			max = g_info.c_touch[i];
+			max = g_inf.c_touch[i];
 			opt = i;
 		}
 		i++;
 	}
-	g_info.count_ways = g_info.c_touch[opt];
+	g_inf.count_ways = g_inf.c_touch[opt];
 	// ft_printf("opt = %d\n", opt);
 	take_optimal(opt);
 }
@@ -206,25 +206,25 @@ void	take_ways(void)
 	int		count;
 
 	i = 0;
-	if (g_info.c_ant == 1)
+	if (g_inf.c_ant == 1)
 		return ;
-	actual = g_info.w_ready;
-	g_info.touch = malloc(sizeof(char * ) * g_info.c_ways);
-	g_info.c_touch = malloc(sizeof(int) * g_info.c_ways);
-	while (i < g_info.c_ways)
+	actual = g_inf.w_ready;
+	g_inf.touch = malloc(sizeof(char * ) * g_inf.c_ways);
+	g_inf.c_touch = malloc(sizeof(int) * g_inf.c_ways);
+	while (i < g_inf.c_ways)
 	{
 		j = 0;
-		g_info.touch[i] = malloc(sizeof(char) * g_info.c_ways);
-		buff = g_info.w_ready;
+		g_inf.touch[i] = malloc(sizeof(char) * g_inf.c_ways);
+		buff = g_inf.w_ready;
 		put_in_actual(actual, i);
 		while (buff)
 		{
 			if (buff == actual || put_in_actual(buff, i) == 0)
-				g_info.touch[i][j] = 1;
+				g_inf.touch[i][j] = 1;
 			else
-				g_info.touch[i][j] = 0;
+				g_inf.touch[i][j] = 0;
 			if (j < i)
-				g_info.touch[j][i] = g_info.touch[i][j];
+				g_inf.touch[j][i] = g_inf.touch[i][j];
 			buff = buff->next;
 			j++;
 		}
@@ -232,17 +232,17 @@ void	take_ways(void)
 		i++;
 	}
 	i = 0;
-	while (i < g_info.c_ways)
+	while (i < g_inf.c_ways)
 	{
 		j = 0;
 		count = 0;
-		while (j < g_info.c_ways)
+		while (j < g_inf.c_ways)
 		{
-			if (g_info.touch[i][j] == 1)
+			if (g_inf.touch[i][j] == 1)
 				count++;
 			j++;
 		}
-		g_info.c_touch[i] = count;
+		g_inf.c_touch[i] = count;
 		i++;
 	}
 	find_average();
@@ -256,13 +256,13 @@ void    print_crowd(void)
 	int     j;
 
 	i = 0;
-	while (i < g_info.c_ways)
+	while (i < g_inf.c_ways)
 	{
 		ft_printf("way[%d]:\n", i + 1);
 		j = 0;
 		while (j < 2)
 		{
-			ft_printf("name[%d] = %s\t", j, g_info.rooms[g_info.w_heap[i].way[j]].name);
+			ft_printf("name[%d] = %s\t", j, g_inf.rooms[g_inf.w_heap[i].way[j]].name);
 			j++;
 		}
 		ft_printf("\n");
@@ -275,10 +275,10 @@ void    print_one_way(void)
 	int		i;
 
 	i = 0;
-	ft_printf("w = %d\n", g_info.w_ready->w);
-	while (i < g_info.w_ready->w + 1 && g_info.w_ready->way[i] != -1)
+	ft_printf("w = %d\n", g_inf.w_ready->w);
+	while (i < g_inf.w_ready->w + 1 && g_inf.w_ready->way[i] != -1)
 	{
-		ft_printf("name = %s\n", g_info.rooms[g_info.w_ready->way[i]].name);
+		ft_printf("name = %s\n", g_inf.rooms[g_inf.w_ready->way[i]].name);
 		i++;
 	}
 }
@@ -290,12 +290,12 @@ int     less_weight(int src)
 
 	i = 0;
 	dst = src;
-	if (src == g_info.r_end)
+	if (src == g_inf.r_end)
 		return (-1);
-	while (i < g_info.c_room)
+	while (i < g_inf.c_room)
 	{
-		if (g_info.connect[src][i] != 0 && i != g_info.r_start)
-			if (g_info.rooms[i].weight[0] < g_info.rooms[dst].weight[0])
+		if (g_inf.connect[src][i] != 0 && i != g_inf.r_start)
+			if (g_inf.rooms[i].weight[0] < g_inf.rooms[dst].weight[0])
 				dst = i;
 		i++;
 	}
@@ -307,36 +307,36 @@ void	for_one1(void)
 	int		i;
 	int		j;
 
-	g_info.w_ready = malloc(sizeof(t_ways));
-	g_info.w_ready->w = g_info.w_heap->w;
-	i = g_info.w_ready->w;
+	g_inf.w_ready = malloc(sizeof(t_ways));
+	g_inf.w_ready->w = g_inf.w_heap->w;
+	i = g_inf.w_ready->w;
 	j = 0;
 	while (i > 0)
 	{
-		g_info.w_ready->way[j] = g_info.w_heap->way[i];
+		g_inf.w_ready->way[j] = g_inf.w_heap->way[i];
 		i--;
 		j++;
 	}
-	g_info.go_ways = g_info.w_ready;
-	g_info.count_ways = 1;
-	free(g_info.w_heap);
+	g_inf.go_ways = g_inf.w_ready;
+	g_inf.count_ways = 1;
+	free(g_inf.w_heap);
 }
 
 void    for_one(void)
 {
 	int     dst;
 
-	g_info.w_heap = malloc(sizeof(t_ways));
-	g_info.w_heap->way[0] = g_info.r_start;
-	g_info.rooms[g_info.r_start].weight[0] = ROOM * 2;
-	g_info.w_heap->c_rom++;
-	while ((dst = less_weight(g_info.w_heap->way[g_info.w_heap->c_rom - 1])) >= 0)
+	g_inf.w_heap = malloc(sizeof(t_ways));
+	g_inf.w_heap->way[0] = g_inf.r_start;
+	g_inf.rooms[g_inf.r_start].weight[0] = ROOM * 2;
+	g_inf.w_heap->c_rom++;
+	while ((dst = less_weight(g_inf.w_heap->way[g_inf.w_heap->c_rom - 1])) >= 0)
 	{
-		g_info.w_heap->way[g_info.w_heap->c_rom] = dst;
-		g_info.w_heap->c_rom++;
-		g_info.w_heap->w++;
+		g_inf.w_heap->way[g_inf.w_heap->c_rom] = dst;
+		g_inf.w_heap->c_rom++;
+		g_inf.w_heap->w++;
 	}
-	g_info.w_heap->way[g_info.w_heap->c_rom] = -1;
+	g_inf.w_heap->way[g_inf.w_heap->c_rom] = -1;
 	for_one1();
 	// print_one_way();
 }
@@ -421,23 +421,23 @@ void	way_built(t_ways *buff)
 	int		i;
 
 	i = 0;
-	while (i < g_info.c_room)
+	while (i < g_inf.c_room)
 	{
-		if (g_info.connect[buff->way[0]][i] > 0 && i != buff->way[0]
+		if (g_inf.connect[buff->way[0]][i] > 0 && i != buff->way[0]
 		&& repeat(buff->way, i, buff->w + 1) == 1
-		&& (((g_info.rooms[buff->way[0]].weight[0] > g_info.rooms[i].weight[0]
-		|| g_info.rooms[i].weight[1] < W2)
-		&& g_info.rooms[buff->way[0]].weight[0] != -1)
-		|| buff->way[0] == g_info.r_start))
+		&& (((g_inf.rooms[buff->way[0]].weight[0] > g_inf.rooms[i].weight[0]
+		|| g_inf.rooms[i].weight[1] < W2)
+		&& g_inf.rooms[buff->way[0]].weight[0] != -1)
+		|| buff->way[0] == g_inf.r_start))
 		{
-			g_info.rooms[i].weight[1]++;
-			if (i == g_info.r_end)
+			g_inf.rooms[i].weight[1]++;
+			if (i == g_inf.r_end)
 			{
-				up_tail(&g_info.w_ready, copy_way(buff, i));
-				g_info.c_ways++;
+				up_tail(&g_inf.w_ready, copy_way(buff, i));
+				g_inf.c_ways++;
 			}
 			else
-				up_tail(&g_info.w_heap, copy_way(buff, i));
+				up_tail(&g_inf.w_heap, copy_way(buff, i));
 		}
 		i++;
 	}
@@ -453,16 +453,16 @@ void	for_crowd(void)
 {
 	t_ways	*buff;
 
-	up_tail(&g_info.w_heap, new_way(g_info.r_start, 0));
-	while (g_info.w_heap)
+	up_tail(&g_inf.w_heap, new_way(g_inf.r_start, 0));
+	while (g_inf.w_heap)
 	{
-		buff = take_tail(&g_info.w_heap);
+		buff = take_tail(&g_inf.w_heap);
 		if (buff == NULL)
 			ft_error_clean();
 		way_built(buff);
 		way_destroy(buff);
 	}
-	if (g_info.c_ways == 0)
+	if (g_inf.c_ways == 0)
 		ft_error_clean();
 }
 
@@ -472,13 +472,13 @@ void	fresh_ways(void)
 	int		j;
 
 	i = 0;
-	while (i < g_info.c_room)
+	while (i < g_inf.c_room)
 	{
-		g_info.rooms[i].is_touch = malloc(sizeof(char) * g_info.c_ways);
+		g_inf.rooms[i].is_touch = malloc(sizeof(char) * g_inf.c_ways);
 		j = 0;
-		while (j < g_info.c_ways)
+		while (j < g_inf.c_ways)
 		{
-			g_info.rooms[i].is_touch[j] = 0;
+			g_inf.rooms[i].is_touch[j] = 0;
 			j++;
 		}
 		i++;
@@ -487,7 +487,7 @@ void	fresh_ways(void)
 
 void    get_ways(void)
 {
-	if (g_info.c_ant < 2)
+	if (g_inf.c_ant < 2)
 		for_one();
 	else
 	{
@@ -505,21 +505,21 @@ void    look_way(void)
 
 	i = 0;
 	k = 0;
-	g_info.tail[i] = g_info.r_end;
-	g_info.rooms[g_info.r_end].weight[0] = 0;
-	while (g_info.tail[i] >= 0)
+	g_inf.tail[i] = g_inf.r_end;
+	g_inf.rooms[g_inf.r_end].weight[0] = 0;
+	while (g_inf.tail[i] >= 0)
 	{
 		j = 0;
-		while (j < g_info.c_room)
+		while (j < g_inf.c_room)
 		{
-			if (g_info.connect[g_info.tail[i]][j] == 1 && j != g_info.r_start
-			&& g_info.rooms[j].weight[0] == -1)
+			if (g_inf.connect[g_inf.tail[i]][j] == 1 && j != g_inf.r_start
+			&& g_inf.rooms[j].weight[0] == -1)
 			{
-				g_info.connect[j][g_info.tail[i]] = 2;
-				g_info.connect[g_info.tail[i]][j] = 2;
+				g_inf.connect[j][g_inf.tail[i]] = 2;
+				g_inf.connect[g_inf.tail[i]][j] = 2;
 				k++;
-				g_info.tail[k] = j;
-				g_info.rooms[j].weight[0] = g_info.rooms[g_info.tail[i]].weight[0] + 1;
+				g_inf.tail[k] = j;
+				g_inf.rooms[j].weight[0] = g_inf.rooms[g_inf.tail[i]].weight[0] + 1;
 			}
 			j++;
 		}
@@ -538,7 +538,7 @@ void    ft_clean_con(char **arr)
 	int     i;
 
 	i = 0;
-	while (i < g_info.c_room)
+	while (i < g_inf.c_room)
 	{
 		ft_strdel(&arr[i]);
 		i++;
@@ -552,11 +552,11 @@ void    ft_error_clean(void)
 	int     i;
 
 	i = 0;
-	if (g_info.connect)
-		ft_clean_con(g_info.connect);
-	while (i < ROOM && g_info.rooms[i].name)
+	if (g_inf.connect)
+		ft_clean_con(g_inf.connect);
+	while (i < ROOM && g_inf.rooms[i].name)
 	{
-		free(g_info.rooms[i].name);
+		free(g_inf.rooms[i].name);
 		i++;
 	}
 	ft_printf("ERROR");
@@ -591,7 +591,7 @@ void    parse_ants(char *str)
 		}
 	ft_strdel(&str);
 	if (tmp != 0)
-		g_info.c_ant = tmp;
+		g_inf.c_ant = tmp;
 	else
 	{
 		ft_printf("NO ANTS");
@@ -657,7 +657,7 @@ void    take_room(char *str, char c)
 
 	if (!(str))
 		return ;
-	g_info.rooms[g_info.c_room].name = lem_split(str, ' ');
+	g_inf.rooms[g_inf.c_room].name = lem_split(str, ' ');
 	if (!(buff = ft_strchr(str, ' ')))
 		ft_error_clean();
 	buff++;
@@ -673,20 +673,20 @@ void    take_room(char *str, char c)
 		}
 		else if (buff[i] == ' ')
 		{
-			g_info.rooms[g_info.c_room].x = tmp;
+			g_inf.rooms[g_inf.c_room].x = tmp;
 			tmp = 0;
 		}
 		else
 			ft_error_clean();
 		i++;
 	}
-	g_info.rooms[g_info.c_room].y = tmp;
-	g_info.rooms[g_info.c_room].s_or_e = c;
-	g_info.rooms[g_info.c_room].weight[0] = -1;
-	g_info.rooms[g_info.c_room].weight[1] = -1;
-	g_info.rooms[g_info.c_room].ant = 0;
-	g_info.rooms[g_info.c_room].num_ant = -1;
-	g_info.c_room++;
+	g_inf.rooms[g_inf.c_room].y = tmp;
+	g_inf.rooms[g_inf.c_room].s_or_e = c;
+	g_inf.rooms[g_inf.c_room].weight[0] = -1;
+	g_inf.rooms[g_inf.c_room].weight[1] = -1;
+	g_inf.rooms[g_inf.c_room].ant = 0;
+	g_inf.rooms[g_inf.c_room].num_ant = -1;
+	g_inf.c_room++;
 	ft_strdel(&str);
 }
 
@@ -696,14 +696,14 @@ void    create_con(void)
 	int     j;
 
 	i = 0;
-	g_info.connect = malloc(sizeof(char *) * g_info.c_room);
-	while (i < g_info.c_room)
+	g_inf.connect = malloc(sizeof(char *) * g_inf.c_room);
+	while (i < g_inf.c_room)
 	{
 		j = 0;
-		g_info.connect[i] = malloc(sizeof(char) * g_info.c_room);
-		while (j < g_info.c_room)
+		g_inf.connect[i] = malloc(sizeof(char) * g_inf.c_room);
+		while (j < g_inf.c_room)
 		{
-			g_info.connect[i][j] = 0;
+			g_inf.connect[i][j] = 0;
 			j++;
 		}
 		i++;
@@ -721,11 +721,11 @@ void    take_con(char *line)
 	i = 0;
 	one = -1;
 	two = -1;
-	while (i < ROOM && g_info.rooms[i].name)
+	while (i < ROOM && g_inf.rooms[i].name)
 	{
-		if (ft_strcmp(buff[0], g_info.rooms[i].name) == 0)
+		if (ft_strcmp(buff[0], g_inf.rooms[i].name) == 0)
 			one = i;
-		if (ft_strcmp(buff[1], g_info.rooms[i].name) == 0)
+		if (ft_strcmp(buff[1], g_inf.rooms[i].name) == 0)
 			two = i;
 		i++;
 	}
@@ -734,8 +734,8 @@ void    take_con(char *line)
 	free(buff);
 	if (one == -1 || two == -1)
 		ft_error_clean();
-	g_info.connect[one][two] = 1;
-	g_info.connect[two][one] = 1;
+	g_inf.connect[one][two] = 1;
+	g_inf.connect[two][one] = 1;
 	ft_strdel(&line);
 }
 
@@ -743,7 +743,7 @@ void    parsing2(char *line)
 {
 	if (!line)
 		return ;
-	if (g_info.connect == NULL)
+	if (g_inf.connect == NULL)
 		create_con();
 	take_con(line);
 	while (get_next_line(0, &line) > 0)
@@ -770,7 +770,7 @@ void    parsing(void)
 		{
 			ft_strdel(&line);
 			get_next_line(0, &line);
-			g_info.r_start = g_info.c_room;
+			g_inf.r_start = g_inf.c_room;
 			take_room(line, 1);
 			i++;
 		}
@@ -778,7 +778,7 @@ void    parsing(void)
 		{
 			ft_strdel(&line);
 			get_next_line(0, &line);
-			g_info.r_end = g_info.c_room;
+			g_inf.r_end = g_inf.c_room;
 			take_room(line, 2);
 			i++;
 		}
@@ -796,7 +796,7 @@ void    parsing(void)
 		ft_strdel(&line);
 		ft_error_clean();
 	}
-	g_info.rooms[g_info.r_start].ant = g_info.c_ant;
+	g_inf.rooms[g_inf.r_start].ant = g_inf.c_ant;
 	parsing2(line);
 	// print_rooms();
 }
@@ -806,19 +806,19 @@ void    init(void)
 	int     i;
 
 	i = 0;
-	g_info.connect = NULL;
-	g_info.c_room = 0;
-	g_info.c_ways = 0;
-	g_info.num_ants = 0;
+	g_inf.connect = NULL;
+	g_inf.c_room = 0;
+	g_inf.c_ways = 0;
+	g_inf.num_ants = 0;
 	while (i < ROOM)
 	{
-		g_info.tail[i] = -1;
-		g_info.rooms[i].name = NULL;
+		g_inf.tail[i] = -1;
+		g_inf.rooms[i].name = NULL;
 		i++;
 	}
 	while (i < ROOM)
 	{
-		g_info.tail[i] = -1;
+		g_inf.tail[i] = -1;
 		i++;
 	}
 }
@@ -841,7 +841,7 @@ void	print_ways()
 	int		j;
 	t_ways	*lol;
 
-	lol = g_info.w_ready;
+	lol = g_inf.w_ready;
 	j = 0;
 	while (lol)
 	{
@@ -865,34 +865,34 @@ void    print_rooms(void)
 
 	i = 0;
 	j = 0;
-	ft_printf("ants = %d\n", g_info.c_ant);
-	ft_printf("c_room = %d\nr_st = %d\tr_end = %d\n", g_info.c_room, g_info.r_start, g_info.r_end);
-	while (i < ROOM && g_info.rooms[i].name != NULL)
+	ft_printf("ants = %d\n", g_inf.c_ant);
+	ft_printf("c_room = %d\nr_st = %d\tr_end = %d\n", g_inf.c_room, g_inf.r_start, g_inf.r_end);
+	while (i < ROOM && g_inf.rooms[i].name != NULL)
 	{
 		ft_printf("name = %s\nx = %d\ty = %d\tind = %d\tweight = %d\n",
-		g_info.rooms[i].name,  g_info.rooms[i].x,
-		g_info.rooms[i].y,  g_info.rooms[i].s_or_e, g_info.rooms[i].weight[0]);
+		g_inf.rooms[i].name,  g_inf.rooms[i].x,
+		g_inf.rooms[i].y,  g_inf.rooms[i].s_or_e, g_inf.rooms[i].weight[0]);
 		i++;
 	}
 	i = 0;
 	ft_printf("\t");
-	while (i < g_info.c_room)
+	while (i < g_inf.c_room)
 	{
 
 		j = 0;
-		while (j < g_info.c_room && i == 0)
+		while (j < g_inf.c_room && i == 0)
 		{
-			ft_printf("\033[32m%s\t\033[m", g_info.rooms[j].name);
+			ft_printf("\033[32m%s\t\033[m", g_inf.rooms[j].name);
 			j++;
 		}
 		if (i == 0)
 			ft_printf("\n");
 		j = 0;
-		while (j < g_info.c_room)
+		while (j < g_inf.c_room)
 		{
 			if (j == 0)
-				ft_printf("\033[32m%s\t\033[m", g_info.rooms[i].name);
-			ft_printf("%d\t", g_info.connect[i][j]);
+				ft_printf("\033[32m%s\t\033[m", g_inf.rooms[i].name);
+			ft_printf("%d\t", g_inf.connect[i][j]);
 			j++;
 		}
 		ft_printf("\n");
@@ -907,9 +907,9 @@ void    print_tail(void)
 
 	i = 0;
 	ft_printf("\n\ntail = \t");
-	while (g_info.tail[i] != -1)
+	while (g_inf.tail[i] != -1)
 	{
-		ft_printf("%d  ", g_info.tail[i]);
+		ft_printf("%d  ", g_inf.tail[i]);
 		i++;
 	}
 	ft_printf("\n\n");
@@ -921,7 +921,7 @@ void    print_way(void)
 	int     i;
 	int     j;
 	
-	lol = g_info.w_heap;
+	lol = g_inf.w_heap;
 	i = 0;
 	while (lol)
 	{
@@ -930,7 +930,7 @@ void    print_way(void)
 		while (lol->way[j] != -1)
 		{
 			ft_printf("room[%d] = %d - ", j, lol->way[j]);
-			ft_printf("%s\t\t", g_info.rooms[lol->way[j]].name);
+			ft_printf("%s\t\t", g_inf.rooms[lol->way[j]].name);
 			j++;
 		}
 		ft_printf("\n");

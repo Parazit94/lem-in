@@ -8,11 +8,11 @@ FLAGS = -Wall -Wextra -Werror
 all: $(NAME)
 
 objs/%.o: srcs/%.c
-	gcc -c $< -o $@ -I $(INCL)
+	gcc -I $(INCL) -c $< -o $@ 
 
 $(NAME): $(OBJS)
 	make -C libft/
-	gcc -O3 -o $(NAME) $(OBJS) -I$(INCL) -L libft -lft
+	gcc -O3 -I$(INCL) -L libft -lft -o $(NAME) $(OBJS) 
 
 clean:
 	/bin/rm -f $(OBJS)
