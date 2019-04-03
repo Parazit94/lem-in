@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 15:42:46 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/03 21:13:07 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/03 21:35:50 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void		parsing3(char *line, char c)
 	{
 		ft_strdel(&line);
 		get_next_line(0, &line);
+		check_room(line);
 		g_inf.r_start = g_inf.c_room;
 		take_room(line, 1, 0);
 	}
@@ -52,6 +53,7 @@ void		parsing3(char *line, char c)
 	{
 		ft_strdel(&line);
 		get_next_line(0, &line);
+		check_room(line);
 		g_inf.r_end = g_inf.c_room;
 		take_room(line, 2, 0);
 	}
@@ -73,6 +75,8 @@ void		parsing2(char *line)
 		if (line)
 			take_con(line);
 	}
+	if (line)
+		ft_strdel(&line);
 	g_inf.tail[0] = g_inf.r_end;
 	g_inf.rooms[g_inf.r_end].weight[0] = 0;
 }

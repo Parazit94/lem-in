@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 15:43:46 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/03 21:12:38 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/03 21:27:31 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ static void	put_in_room(int *a, char c, char lol)
 		g_inf.rooms[g_inf.c_room].weight[1] = -1;
 		g_inf.rooms[g_inf.c_room].ant = 0;
 		g_inf.rooms[g_inf.c_room].num_ant = -1;
+		g_inf.rooms[g_inf.c_room].is_touch = NULL;
 		g_inf.c_room++;
 	}
 	a = 0;

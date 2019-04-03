@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 15:46:58 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/03 21:20:01 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/03 21:28:16 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static void	clean_room(void)
 	while (i < g_inf.c_room)
 	{
 		free(g_inf.rooms[i].name);
+		free(g_inf.rooms[i].is_touch);
 		i++;
 	}
 }
