@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 16:09:23 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/03 16:46:24 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/06 19:51:34 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	take_ways2(t_ways *actual, int i)
 	buff = g_inf.w_ready;
 	while (buff)
 	{
-		if (buff == actual || put_in_actual(buff, i) == 0)
+		if (put_in_actual(buff, i) == 0)
 			g_inf.touch[i][j] = 1;
 		else
 			g_inf.touch[i][j] = 0;
@@ -71,13 +71,13 @@ void	take_ways(void)
 		g_inf.touch[i] = malloc(sizeof(char) * g_inf.c_ways);
 		put_in_actual(actual, i);
 		take_ways2(actual, i);
+		actual->num = i;
 		actual = actual->next;
 		i++;
 	}
 	touching();
 	find_average();
-	find_optimal();
-	// print_touch();
+	print_touch();
 }
 
 void	for_one1(void)

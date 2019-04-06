@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 21:16:00 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/03 21:18:39 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/06 20:44:35 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	print_opt(void)
 		j = 0;
 		while (j < g_inf.go_ways[i].w)
 		{
-			ft_printf("%d\t", g_inf.go_ways[i].way[j]);
+			ft_printf("%s\t", /*g_inf.go_ways[i].way[j],*/ g_inf.rooms[g_inf.go_ways[i].way[j]].name);
 			j++;
 		}
 		ft_printf("\n");
@@ -69,8 +69,10 @@ void	print_touch(void)
 {
 	int		i;
 	int		j;
+	t_ways	*lol;
 
 	i = 0;
+	lol = g_inf.w_ready;
 	while (i < g_inf.c_ways)
 	{
 		j = 0;
@@ -81,6 +83,13 @@ void	print_touch(void)
 		}
 		ft_printf("\t%d\t%d", g_inf.c_touch[i], g_inf.c_average[i]);
 		ft_printf("\n");
+		i++;
+	}
+	i = 0;
+	while (i < g_inf.c_ways)
+	{
+		ft_printf("lol[%d] = %d\n", i, lol->num);
+		lol = lol->next;
 		i++;
 	}
 }
@@ -186,4 +195,32 @@ void	print_way(void)
 		lol = lol->next;
 		i++;
 	}
+}
+
+void	print_pick(void)
+{
+	int	i;
+	int	j;
+	int	k;
+
+	i = 0;
+	ft_printf("c_sample = %d\n", g_inf.c_sample);
+	while (i < g_inf.c_sample)
+	{
+		j = 0;
+		ft_printf("[%d]: count = %d\t ok = %d\n", i, g_inf.sample[i].count, g_inf.sample[i].ok);
+		while (j < g_inf.sample[i].count)
+		{
+			k = 0;
+			while (k < g_inf.sample[i].way[j].w)
+			{
+				ft_printf("%d\t",  g_inf.sample[i].way[j].way[k]);
+				k++;
+			}
+			ft_printf("\n");
+			j++;
+		}
+		i++;
+	}
+	ft_printf("sam = %d\n", g_inf.sam);
 }

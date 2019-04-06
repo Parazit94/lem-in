@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 16:13:10 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/03 17:15:30 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/06 20:51:00 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,16 @@ static void	push_ants(void)
 				push(i, j);
 			j++;
 		}
-		if ((i == 0 || g_inf.rooms[g_inf.r_start].ant >= g_inf.go_ways[i].w ||
-		(g_inf.rooms[g_inf.r_start].ant + g_inf.go_ways[0].w - 1) >=
-		g_inf.go_ways[i].w)
-		&& g_inf.rooms[g_inf.r_start].ant > 0)
+		if ((i == 0 || (g_inf.rooms[g_inf.r_start].ant + g_inf.go_ways[0].w - 1)
+		>= g_inf.go_ways[i].w) && g_inf.rooms[g_inf.r_start].ant > 0)
 			push_start(i, j);
 		i--;
 	}
+	exit (1);
 	ft_printf("\n");
 }
 
-void		walk(void)
+void		walk2(void)
 {
 	while (g_inf.rooms[g_inf.r_end].ant != g_inf.c_ant)
 		push_ants();

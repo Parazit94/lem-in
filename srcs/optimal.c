@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 16:11:22 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/03 17:02:50 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/06 19:26:35 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,22 @@
 int		put_in_actual(t_ways *actual, int c_touch)
 {
 	int		i;
+	int		j;
 
 	i = 1;
+	j = 0;
 	while (i < actual->w && actual->way[i] != -1)
 	{
-		if (g_inf.rooms[actual->way[i]].is_touch[c_touch] == 0)
-		{
+		if (g_inf.rooms[actual->way[i]].is_touch[c_touch] == 0 && j == 0)
 			g_inf.rooms[actual->way[i]].is_touch[c_touch] = 1;
-			i++;
-		}
 		else
-			return (1);
+			j++;
+		i++;
 	}
-	return (0);
+	if (j == 0)
+		return (0);
+	else
+		return (1);
 }
 
 void	find_average(void)
@@ -53,7 +56,7 @@ void	find_average(void)
 			j++;
 			buff = buff->next;
 		}
-		if ((g_inf.c_average[i] = count - (count / g_inf.c_touch[i])) == 0)
+		if (g_inf.c_touch[i] == 0 || (g_inf.c_average[i] = count - (count / g_inf.c_touch[i])) == 0)
 			g_inf.c_average[i] = count;
 		i++;
 	}
@@ -79,7 +82,7 @@ void	take_optimal(int opt)
 		i++;
 		buff = buff->next;
 	}
-	// print_opt();
+	print_opt();
 }
 
 void	find_optimal(void)
@@ -95,8 +98,7 @@ void	find_optimal(void)
 	lol = ROOM;
 	while (i < g_inf.c_ways)
 	{
-		if (g_inf.c_touch[i] > max && lol > g_inf.c_average[i]
-		&& max < g_inf.c_ant)
+		if (g_inf.c_touch[i] > max && lol > g_inf.c_average[i])
 		{
 			max = g_inf.c_touch[i];
 			opt = i;
@@ -104,6 +106,6 @@ void	find_optimal(void)
 		i++;
 	}
 	g_inf.count_ways = g_inf.c_touch[opt];
-	// ft_printf("opt = %d\n", opt);
+	ft_printf("opt = %d\n", opt);
 	take_optimal(opt);
 }

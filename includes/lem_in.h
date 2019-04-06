@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 20:05:11 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/03 21:14:14 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/06 21:19:13 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LEM_IN_H
 # define ROOM 10000
 # define W2 2
+# define R 10000
 # include "./../libft/includes/libft.h"
 
 typedef struct		s_ways
@@ -21,6 +22,8 @@ typedef struct		s_ways
 	int				w;
 	int				c_rom;
 	int				way[ROOM];
+	int				a;
+	int				num;
 	struct s_ways	*next;
 }					t_ways;
 
@@ -36,6 +39,14 @@ typedef struct		s_room
 	char			*is_touch;
 }					t_room;
 
+typedef struct		s_sample
+{
+	t_ways			*way;
+	int				count;
+	char			ok;
+	int				w;
+	char			touch[ROOM];
+}					t_sample;
 typedef struct		s_lem
 {
 	int				c_ant;
@@ -54,10 +65,14 @@ typedef struct		s_lem
 	int				count_ways;
 	t_ways			*go_ways;
 	int				num_ants;
+
+	t_sample		sample[99999999];
+	int				c_sample;
+	int				sam;
 }					t_lem;
 t_lem				g_inf;
 void				init(void);
-void				walk(void);
+void				walk2(void);
 int					put_in_actual(t_ways *actual, int c_touch);
 void				find_average(void);
 void				take_optimal(int opt);
@@ -86,6 +101,21 @@ void				take_room(char *str, char c, int i);
 void				parsing2(char *line);
 void				parsing(void);
 void				ft_clean(char	*str, int i);
+
+void	pick(void);
+
+
+void				create(void);
+void	set_dif(t_sample *p, t_ways *buff, int i, int one);
+int		cmp_ways(t_sample *p, t_ways *buff, int i);
+void	way_diff(int i, t_ways *buff, int *a, int *tn);
+void	set_sample_a(t_sample *buff, int val);
+int		get_inc(int inc, int new_c);
+int		set_param(int *max, int *sum, int *new_c, t_sample *buff);
+int		get_weight(t_sample *buff);
+void	take_sample(int i, int *min);
+
+
 //Не нужны
 void				print_one_way(void);
 void				print_crowd(void);
@@ -95,4 +125,5 @@ void				print_rooms(void);
 void				print_tail(void);
 void				print_way(void);
 void				print_ways();
+void	print_pick(void);
 #endif
