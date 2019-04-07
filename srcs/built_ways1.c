@@ -6,40 +6,18 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 15:50:15 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/03 21:11:45 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/07 18:57:31 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
-void	fresh_ways(void)
-{
-	int		i;
-	int		j;
-
-	i = 0;
-	while (i < g_inf.c_room)
-	{
-		g_inf.rooms[i].is_touch = malloc(sizeof(char) * g_inf.c_ways);
-		j = 0;
-		while (j < g_inf.c_ways)
-		{
-			g_inf.rooms[i].is_touch[j] = 0;
-			j++;
-		}
-		i++;
-	}
-}
 
 void	get_ways(void)
 {
 	if (g_inf.c_ant < 2)
 		for_one();
 	else
-	{
 		for_crowd();
-		fresh_ways();
-	}
 }
 
 void	look_way(void)
@@ -49,21 +27,21 @@ void	look_way(void)
 	int		k;
 
 	i = 0;
-	k = 0;
-	while (g_inf.tail[i] >= 0)
+	g_inf.tail[0] = g_inf.r_end;
+	k = 1;
+	g_inf.rooms[g_inf.tail[0]].weight[0] = 0;
+	while (i < k)
 	{
 		j = 0;
 		while (j < g_inf.c_room)
 		{
-			if (g_inf.connect[g_inf.tail[i]][j] == 1 && j != g_inf.r_start
+			if (g_inf.connect[g_inf.tail[i]][j] == 1
 			&& g_inf.rooms[j].weight[0] == -1)
 			{
-				g_inf.connect[j][g_inf.tail[i]] = 2;
-				g_inf.connect[g_inf.tail[i]][j] = 2;
-				k++;
-				g_inf.tail[k] = j;
 				g_inf.rooms[j].weight[0] =
 				g_inf.rooms[g_inf.tail[i]].weight[0] + 1;
+				g_inf.tail[k] = j;
+				k++;
 			}
 			j++;
 		}

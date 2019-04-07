@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 15:42:46 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/03 21:35:50 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/07 15:40:00 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void		parsing2(char *line)
 	g_inf.tail[0] = g_inf.r_end;
 	g_inf.rooms[g_inf.r_end].weight[0] = 0;
 }
+
 
 void		parsing(void)
 {

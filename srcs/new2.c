@@ -6,91 +6,120 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 16:16:50 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/06 20:30:44 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/07 18:54:58 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void	add(t_sample *p, t_ways *buff)
+int		diff(t_sample *s, t_ways *buff, int i)
 {
-	int		i;
-
-	i = 0;
-	g_inf.sample[g_inf.c_sample].way = malloc(sizeof(t_ways) * 100);
-	while (i < p->count && i < 100)
-	{
-		g_inf.sample[g_inf.c_sample].way[i] = p->way[i];
-		i++;
-	}
-	ft_memcpy(g_inf.sample[g_inf.c_sample].touch, p->touch, g_inf.c_room);
-	g_inf.sample[g_inf.c_sample].way[i] = *buff;
-	g_inf.sample[g_inf.c_sample].count = p->count + 1;
-	g_inf.sample[g_inf.c_sample].w = p->w + buff->w;
-	g_inf.sample[g_inf.c_sample].ok = 0;
-	g_inf.c_sample++;
-}
-
-void	polo(t_sample *p, t_ways *buff, int last)
-{
-	int		i;
-
-	i = 0;
-	while (i < last)
-	{
-		p->touch[buff->way[i]] = 0;
-		i++;
-	}
-}
-
-int		try_to_add(t_sample *p, t_ways *buff)
-{
-	int		i;
-
-	i = 0;
-	while (i < p->count)
-	{
-		if (&p->way[i] == buff)
-			return (0);
-		i++;
-	}
-	i = 1;
 	while (i < buff->w)
 	{
-		if (p->touch[buff->way[i]] == 1)
-		{
-			polo(p, buff, i);
+		if (s->touch[buff->way[i]] == 1 && buff->way[i] != g_inf.r_end
+		&& buff->way[i] != g_inf.r_start)
 			return (0);
-		}
-		p->touch[buff->way[i]] = 1;
 		i++;
 	}
-	add(p, buff);
 	return (1);
 }
 
-void	add_new_way(t_sample *p)
+void	put_way(t_sample *s, t_ways *buff, int i, int j)
 {
-	t_ways	*buff;
-
-	buff = g_inf.w_ready;
-	while (buff)
+	while (i < buff->w)
 	{
-		if (try_to_add(p, buff) == 1)
-			return ;
-		buff = buff->next;
+		if (j == 1)
+			s->touch[buff->way[i]] = 1;
+		else if (i != g_inf.r_start)
+			s->touch[buff->way[i]] = 0;
+		i++;
 	}
-	p->ok = 1;
+}
+
+void	try_to_add(int	i, t_ways *buff, int *a, int *t)
+{
+	int		j;
+
+	j = 0;
+	if (diff(&g_inf.sample[i], buff, 0))
+	{
+		g_inf.sample[g_inf.c_sample].way = malloc(sizeof(t_ways) * 100);
+		while (j < g_inf.sample[i].count)
+		{
+			g_inf.sample[g_inf.c_sample].way[j] = g_inf.sample[i].way[j];
+			j++;
+		}
+		g_inf.sample[g_inf.c_sample].way[j] = *buff;
+		g_inf.sample[g_inf.c_sample].count = g_inf.sample[i].count + 1;
+		g_inf.sample[g_inf.c_sample].ok = 0;
+		g_inf.sample[g_inf.c_sample].w += buff->w;
+		ft_memcpy(g_inf.sample[g_inf.c_sample].touch, g_inf.sample[i].touch, g_inf.c_room);
+		put_way(&g_inf.sample[g_inf.c_sample], buff, 0, 1);
+		g_inf.c_sample++;
+		*a = 1;
+	}
+	(*t)++;
+}
+
+void	vote_pick(t_sample *p, int *min, int i)
+{
+	if (p->count)
+		p->w = p->w / p->count;
+	if (p->w < *min)
+	{
+		*min = p->w;
+		g_inf.sam = i;
+	}
+}
+
+void	pick3(void)
+{
+	int		i;
+	t_ways	*buff;
+	int		min;
+
+	i = 0;
+	min = 2147483647;
+	while (i < g_inf.c_sample)
+	{
+		buff = g_inf.w_ready;
+		while (buff)
+		{
+			if (diff(&g_inf.sample[i], buff, 0))
+			{
+				g_inf.sample[i].way[g_inf.sample[i].count] = *buff;
+				g_inf.sample[i].count++;
+				put_way(&g_inf.sample[i], buff, 0, 1);
+			}
+			buff = buff->next;
+		}
+		vote_pick(&g_inf.sample[i], &min, i);
+		i++;
+	}
 }
 
 void	pick_2(void)
 {
 	int		i;
+	t_ways	*buff;
+	int		t;
+	int		a;
+	int		j;
 
 	i = 0;
 	while (i < g_inf.c_sample)
 	{
-		add_new_way(&g_inf.sample[i]);
+		buff = g_inf.w_ready;
+		a = 0;
+		t = 0;
+		if (g_inf.sample[i].ok == 0)
+			while (buff && t < R && g_inf.sample[i].count < 4)
+			{
+				try_to_add(i, buff, &a, &t);
+				buff = buff->next;
+			}
+		if (!a && g_inf.sample[i].ok == 0)
+			g_inf.sample[i].ok = 1;
 		i++;
 	}
 }
@@ -105,21 +134,23 @@ void	pick(void)
 	buff = g_inf.w_ready;
 	while (buff && i < R)
 	{
-		j = 0;
 		g_inf.sample[g_inf.c_sample].way = malloc(sizeof(t_ways) * 100);
 		g_inf.sample[g_inf.c_sample].way[0] = *buff;
+		g_inf.sample[g_inf.c_sample].count = 1;
+		g_inf.sample[g_inf.c_sample].ok = 0;
+		g_inf.sample[g_inf.c_sample].w = 0;
+		g_inf.sample[g_inf.c_sample].w += buff->w;
+		ft_bzero(g_inf.sample[g_inf.c_sample].touch, g_inf.c_room);
+		j = 0;
 		while (j < buff->w)
 		{
 			g_inf.sample[g_inf.c_sample].touch[buff->way[j]] = 1;
 			j++;
 		}
-		g_inf.sample[g_inf.c_sample].count = 1;
-		g_inf.sample[g_inf.c_sample].ok = 0;
-		g_inf.sample[g_inf.c_sample].w = 0;
-		g_inf.sample[g_inf.c_sample].w += buff->w;
 		g_inf.c_sample++;
 		buff = buff->next;
 		i++;
 	}
 	pick_2();
+	pick3();
 }

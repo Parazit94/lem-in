@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 20:05:15 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/06 21:20:49 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/07 18:57:46 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,6 @@ void	take_it(t_sample *p, int *c, int index)
 	{
 		g_inf.sam = index;
 		*c = p->count;
-	}
-}
-
-void	vote_pick(void)
-{
-	int		i;
-	int		min;
-	int		count;
-
-	i = 0;
-	count = 0;
-	min = 999999;
-	while (i < g_inf.c_sample)
-	{
-		
-		if (g_inf.sample[i].ok == 1 && g_inf.sample[i].count >= count)
-		{
-			g_inf.sample[i].w = g_inf.sample[i].w / g_inf.sample[i].count;
-			take_it(&g_inf.sample[i], &count, i);
-		}
-		i++;
 	}
 }
 
@@ -116,11 +95,14 @@ int	main(int argc, char **argv)
 	// print_ways();
 	// take_ways();
 	pick();
-	vote_pick();
+	// ft_printf("p_count1 = %d\n",g_inf.c_sample);
+	// ft_printf("sam = %d\n",g_inf.sam);
+	// vote_pick();
 	// print_pick();
+	// ft_printf("c_rooms = %d\n", g_inf.c_room);
 	// create();
 	// walk2();
 	walk();
-	ft_clean(NULL, 0);
+	// ft_clean(NULL, 0);
 	return (0);
 }

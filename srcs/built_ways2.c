@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 16:07:22 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/03 21:02:07 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/07 15:55:48 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ t_ways	*copy_way(t_ways *buff, int room)
 	return (new);
 }
 
+
 void	way_built(t_ways *buff)
 {
 	int		i;
@@ -81,10 +82,8 @@ void	way_built(t_ways *buff)
 	{
 		if (g_inf.connect[buff->way[0]][i] > 0 && i != buff->way[0]
 		&& repeat(buff->way, i, buff->w + 1) == 1
-		&& (((g_inf.rooms[buff->way[0]].weight[0] > g_inf.rooms[i].weight[0]
-		|| g_inf.rooms[i].weight[1] < W2)
-		&& g_inf.rooms[buff->way[0]].weight[0] != -1)
-		|| buff->way[0] == g_inf.r_start))
+		&& (((g_inf.rooms[buff->way[0]].weight[0] > g_inf.rooms[i].weight[0])
+		|| g_inf.rooms[i].weight[1] < W2) || buff->way[0] == g_inf.r_start))
 		{
 			g_inf.rooms[i].weight[1]++;
 			if (i == g_inf.r_end)

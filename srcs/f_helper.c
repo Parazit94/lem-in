@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 15:47:49 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/03 21:12:01 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/07 15:22:16 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,7 @@ void	create_con(void)
 	{
 		j = 0;
 		g_inf.connect[i] = malloc(sizeof(char) * g_inf.c_room);
-		while (j < g_inf.c_room)
-		{
-			g_inf.connect[i][j] = 0;
-			j++;
-		}
+		ft_bzero(g_inf.connect[i], g_inf.c_room);
 		i++;
 	}
 }

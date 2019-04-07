@@ -6,15 +6,15 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 20:05:11 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/06 21:19:13 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/07 15:56:18 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEM_IN_H
 # define LEM_IN_H
 # define ROOM 10000
-# define W2 2
-# define R 10000
+# define W2 3
+# define R 22
 # include "./../libft/includes/libft.h"
 
 typedef struct		s_ways
@@ -65,6 +65,7 @@ typedef struct		s_lem
 	int				count_ways;
 	t_ways			*go_ways;
 	int				num_ants;
+	int				t;
 
 	t_sample		sample[99999999];
 	int				c_sample;

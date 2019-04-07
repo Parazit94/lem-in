@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 21:16:00 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/06 20:44:35 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/07 18:33:06 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,11 +105,13 @@ void	print_ways()
 	while (lol)
 	{
 		i = 0;
+		ft_printf("[%d]: ", j);
 		while (i < lol->w)
 		{
 			ft_printf("%d\t", lol->way[i]);
 			i++;
 		}
+		ft_printf("\nw = %d\n", lol->w);
 		ft_printf("\n");
 		lol = lol->next;
 		j++;
@@ -202,23 +204,29 @@ void	print_pick(void)
 	int	i;
 	int	j;
 	int	k;
+	int	lol;
 
 	i = 0;
+	lol = 0;
 	ft_printf("c_sample = %d\n", g_inf.c_sample);
 	while (i < g_inf.c_sample)
 	{
 		j = 0;
-		ft_printf("[%d]: count = %d\t ok = %d\n", i, g_inf.sample[i].count, g_inf.sample[i].ok);
-		while (j < g_inf.sample[i].count)
+		if (g_inf.sample[i].ok == 1)
 		{
-			k = 0;
-			while (k < g_inf.sample[i].way[j].w)
+			lol++;
+			ft_printf("[%d]: count = %d\t ok = %d\n", lol, g_inf.sample[i].count, g_inf.sample[i].ok);
+			while (j < g_inf.sample[i].count)
 			{
-				ft_printf("%d\t",  g_inf.sample[i].way[j].way[k]);
-				k++;
+				k = 0;
+				while (k < g_inf.sample[i].way[j].w)
+				{
+					ft_printf("%d\t",  g_inf.sample[i].way[j].way[k]);
+					k++;
+				}
+				ft_printf("\n");
+				j++;
 			}
-			ft_printf("\n");
-			j++;
 		}
 		i++;
 	}
