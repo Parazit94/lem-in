@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 16:16:50 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/07 18:54:58 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/09 13:09:36 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,55 @@ void	vote_pick(t_sample *p, int *min, int i)
 {
 	if (p->count)
 		p->w = p->w / p->count;
-	if (p->w < *min)
+	if (p->count > g_inf.t)
 	{
 		*min = p->w;
 		g_inf.sam = i;
+		g_inf.t = p->count;
 	}
+	else if (p->count == g_inf.t && p->w < *min)
+	{
+		*min = p->w;
+		g_inf.sam = i;
+		g_inf.t = p->count;
+	}
+}
+
+void	add_start(t_sample *p)
+{
+	int		i;
+
+	i = 0;
+	while (i < p->count)
+	{
+		p->way[i].way[p->way[i].w] = g_inf.r_start;
+		p->way[i].w++;
+		i++;
+	}
+}
+
+void	put_count(t_sample *p)
+{
+	int		i;
+	int		j;
+	t_ways	*buff;
+
+	i = 0;
+	while (i < g_inf.c_ant)
+	{
+		buff = NULL;
+		j = 0;
+		while (j < p->count)
+		{
+			if (!buff || (buff && p->way[j].w + p->way[j].c_ant
+			< buff->w + buff->c_ant))
+				buff = &p->way[j];
+			j++;
+		}
+		buff->c_ant++;
+		i++;
+	}
+	g_inf.rooms[g_inf.r_start].num_ant = g_inf.num_ants++;
 }
 
 void	pick3(void)
@@ -96,6 +140,8 @@ void	pick3(void)
 		vote_pick(&g_inf.sample[i], &min, i);
 		i++;
 	}
+	add_start(&g_inf.sample[g_inf.sam]);
+	put_count(&g_inf.sample[g_inf.sam]);
 }
 
 void	pick_2(void)

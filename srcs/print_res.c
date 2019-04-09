@@ -6,64 +6,75 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 16:13:10 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/06 20:51:00 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/09 13:35:49 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static void	print_ants(int ant, char *room)
+void		push_start(int *way, t_ways *buff, int *j, int i)
 {
-	ft_printf("L%d-%s ", ant, room);
-}
-
-static void	push_start(int i, int j)
-{
-	g_inf.rooms[g_inf.r_start].ant--;
+	ft_printf("L%d-%s ", g_inf.rooms[way[i]].num_ant, g_inf.rooms[way[i - 1]].name);
+	buff->c_ant--;
+	g_inf.rooms[way[i - 1]].ant++;
+	g_inf.rooms[way[i - 1]].num_ant = g_inf.rooms[way[i]].num_ant;
+	g_inf.rooms[way[i]].num_ant = g_inf.num_ants;
 	g_inf.num_ants++;
-	g_inf.rooms[g_inf.go_ways[i].way[j - 1]].ant++;
-	g_inf.rooms[g_inf.go_ways[i].way[j - 1]].num_ant = g_inf.num_ants;
-	print_ants(g_inf.rooms[g_inf.go_ways[i].way[j - 1]].num_ant,
-	g_inf.rooms[g_inf.go_ways[i].way[j - 1]].name);
+	*j = 1;
 }
 
-static void	push(int i, int j)
+void		push_ant(int *way, int *j, int i)
 {
-	g_inf.rooms[g_inf.go_ways[i].way[j]].ant--;
-	g_inf.rooms[g_inf.go_ways[i].way[j - 1]].ant++;
-	g_inf.rooms[g_inf.go_ways[i].way[j - 1]].num_ant =
-	g_inf.rooms[g_inf.go_ways[i].way[j]].num_ant;
-	g_inf.rooms[g_inf.go_ways[i].way[j]].num_ant = 0;
-	print_ants(g_inf.rooms[g_inf.go_ways[i].way[j - 1]].num_ant,
-	g_inf.rooms[g_inf.go_ways[i].way[j - 1]].name);
+	ft_printf("L%d-%s ", g_inf.rooms[way[i]].num_ant, g_inf.rooms[way[i - 1]].name);
+	g_inf.rooms[way[i - 1]].num_ant = g_inf.rooms[way[i]].num_ant;
+	g_inf.rooms[way[i - 1]].ant++;
+	g_inf.rooms[way[i]].ant--;
+	g_inf.rooms[way[i]].num_ant = 0;
+	*j = 1;
 }
 
-static void	push_ants(void)
+int			push(int *way, int size, t_ways *buff)
 {
 	int		i;
 	int		j;
 
-	i = g_inf.count_ways - 1;
-	while (i >= 0)
+	i = 1;
+	while (i < size)
 	{
-		j = 1;
-		while (j < g_inf.go_ways[i].w)
+		if (way[i] == g_inf.r_start)
 		{
-			if (g_inf.rooms[g_inf.go_ways[i].way[j]].ant != 0)
-				push(i, j);
-			j++;
+			if (buff->c_ant > 0 && g_inf.rooms[way[i - 1]].ant == 0
+			&& g_inf.rooms[way[i - 1]].num_ant == 0)
+			push_start(way, buff, &j, i);
 		}
-		if ((i == 0 || (g_inf.rooms[g_inf.r_start].ant + g_inf.go_ways[0].w - 1)
-		>= g_inf.go_ways[i].w) && g_inf.rooms[g_inf.r_start].ant > 0)
-			push_start(i, j);
-		i--;
+		else
+		{
+			if (g_inf.rooms[way[i]].ant > 0 && g_inf.rooms[way[i]].num_ant != 0)
+				push_ant(way, &j, i);
+		}
+		i++;
 	}
-	exit (1);
-	ft_printf("\n");
+	return (j);
 }
 
 void		walk2(void)
 {
-	while (g_inf.rooms[g_inf.r_end].ant != g_inf.c_ant)
-		push_ants();
+	int		i;
+	int		j;
+
+	j = 1;
+	while (j)
+	{
+		j = 0;
+		i = 0;
+		while (i < g_inf.sample[g_inf.sam].count)
+		{
+			j += push(g_inf.sample[g_inf.sam].way[i].way,
+			g_inf.sample[g_inf.sam].way[i].w, 
+			&g_inf.sample[g_inf.sam].way[i]);
+			i++;
+		}
+		if (j)
+			ft_printf("\n");
+	}
 }

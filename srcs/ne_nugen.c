@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 21:16:00 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/07 18:33:06 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/09 14:04:01 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,4 +231,29 @@ void	print_pick(void)
 		i++;
 	}
 	ft_printf("sam = %d\n", g_inf.sam);
+}
+
+void	print_voted(int	a)
+{
+	int		i;
+	int		j;
+	int		lol;
+
+	i = 0;
+	lol = 0;
+	while (i < g_inf.sample[a].count)
+	{
+		j = 0;
+		ft_printf("c_ants = %d ", g_inf.sample[a].way[i].c_ant);
+		ft_printf("[%d]: ", i);
+		while (j < g_inf.sample[a].way[i].w)
+		{
+			ft_printf("%d\t", g_inf.sample[a].way[i].way[j]);
+			j++;
+		}
+		lol += j;
+		ft_printf("\n");
+		i++;
+	}
+	ft_printf("lol = %d\n", lol);
 }

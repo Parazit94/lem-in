@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 20:05:11 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/07 15:56:18 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/09 13:02:08 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct		s_ways
 	int				way[ROOM];
 	int				a;
 	int				num;
+	int				c_ant;
 	struct s_ways	*next;
 }					t_ways;
 
@@ -126,5 +127,6 @@ void				print_rooms(void);
 void				print_tail(void);
 void				print_way(void);
 void				print_ways();
-void	print_pick(void);
+void				print_pick(void);
+void				print_voted(int	a);
 #endif

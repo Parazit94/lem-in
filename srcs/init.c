@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 16:15:50 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/07 15:56:19 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/09 13:09:08 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	init(void)
 	g_inf.c_average = NULL;
 	g_inf.count_ways = 0;
 	g_inf.go_ways = NULL;
-	g_inf.num_ants = 0;
+	g_inf.num_ants = 1;
 	g_inf.c_sample = 0;
 	g_inf.sam = -1;
 	while (i < ROOM)
