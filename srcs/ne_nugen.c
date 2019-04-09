@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 21:16:00 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/09 14:04:01 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/09 14:48:32 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,54 +45,6 @@ void	print_crowd(void)
 	}
 }
 
-void	print_opt(void)
-{
-	int		i;
-	int		j;
-
-	i = 0;
-	while (i < g_inf.count_ways)
-	{
-		j = 0;
-		while (j < g_inf.go_ways[i].w)
-		{
-			ft_printf("%s\t", /*g_inf.go_ways[i].way[j],*/ g_inf.rooms[g_inf.go_ways[i].way[j]].name);
-			j++;
-		}
-		ft_printf("\n");
-		i++;
-	}
-	ft_printf("\n\n");
-}
-
-void	print_touch(void)
-{
-	int		i;
-	int		j;
-	t_ways	*lol;
-
-	i = 0;
-	lol = g_inf.w_ready;
-	while (i < g_inf.c_ways)
-	{
-		j = 0;
-		while (j < g_inf.c_ways)
-		{
-			ft_printf("%d\t", g_inf.touch[i][j]);
-			j++;
-		}
-		ft_printf("\t%d\t%d", g_inf.c_touch[i], g_inf.c_average[i]);
-		ft_printf("\n");
-		i++;
-	}
-	i = 0;
-	while (i < g_inf.c_ways)
-	{
-		ft_printf("lol[%d] = %d\n", i, lol->num);
-		lol = lol->next;
-		i++;
-	}
-}
 
 void	print_ways()
 {
@@ -251,6 +203,7 @@ void	print_voted(int	a)
 			ft_printf("%d\t", g_inf.sample[a].way[i].way[j]);
 			j++;
 		}
+		ft_printf("w = %d", g_inf.sample[a].way[i].w);
 		lol += j;
 		ft_printf("\n");
 		i++;

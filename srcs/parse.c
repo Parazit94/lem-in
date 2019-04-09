@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 15:42:46 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/07 15:40:00 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/09 15:00:43 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	parse_ants(char *str)
 		ft_clean("Not ants", 1);
 }
 
-void		parsing3(char *line, char c)
+static void	parsing3(char *line, char c)
 {
 	if (c == 1)
 	{
@@ -59,7 +59,7 @@ void		parsing3(char *line, char c)
 	}
 }
 
-void		parsing2(char *line)
+static void	parsing2(char *line)
 {
 	if (!line)
 		return ;

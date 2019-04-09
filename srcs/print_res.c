@@ -6,13 +6,13 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 16:13:10 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/09 13:35:49 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/09 15:10:55 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void		push_start(int *way, t_ways *buff, int *j, int i)
+static void	push_start(int *way, t_ways *buff, int *j, int i)
 {
 	ft_printf("L%d-%s ", g_inf.rooms[way[i]].num_ant, g_inf.rooms[way[i - 1]].name);
 	buff->c_ant--;
@@ -23,7 +23,7 @@ void		push_start(int *way, t_ways *buff, int *j, int i)
 	*j = 1;
 }
 
-void		push_ant(int *way, int *j, int i)
+static void	push_ant(int *way, int *j, int i)
 {
 	ft_printf("L%d-%s ", g_inf.rooms[way[i]].num_ant, g_inf.rooms[way[i - 1]].name);
 	g_inf.rooms[way[i - 1]].num_ant = g_inf.rooms[way[i]].num_ant;
@@ -33,12 +33,13 @@ void		push_ant(int *way, int *j, int i)
 	*j = 1;
 }
 
-int			push(int *way, int size, t_ways *buff)
+static int	push(int *way, int size, t_ways *buff)
 {
 	int		i;
 	int		j;
 
 	i = 1;
+	j = 0;
 	while (i < size)
 	{
 		if (way[i] == g_inf.r_start)
@@ -49,7 +50,7 @@ int			push(int *way, int size, t_ways *buff)
 		}
 		else
 		{
-			if (g_inf.rooms[way[i]].ant > 0 && g_inf.rooms[way[i]].num_ant != 0)
+			if (g_inf.rooms[way[i]].num_ant > 0 && g_inf.rooms[way[i]].ant != 0)
 				push_ant(way, &j, i);
 		}
 		i++;
@@ -57,7 +58,7 @@ int			push(int *way, int size, t_ways *buff)
 	return (j);
 }
 
-void		walk2(void)
+void		walk(void)
 {
 	int		i;
 	int		j;

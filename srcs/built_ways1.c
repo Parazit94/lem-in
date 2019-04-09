@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 15:50:15 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/07 18:57:31 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/09 14:58:40 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,4 @@ void	for_one(void)
 	}
 	g_inf.w_heap->way[g_inf.w_heap->c_rom] = -1;
 	for_one1();
-	// print_one_way();
 }
