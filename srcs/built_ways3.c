@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 16:09:23 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/09 15:08:51 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/09 16:00:17 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@ void	for_one1(void)
 	int		j;
 
 	g_inf.w_ready = malloc(sizeof(t_ways));
+	g_inf.w_ready->next = NULL;
 	g_inf.w_ready->w = g_inf.w_heap->w;
-	i = g_inf.w_ready->w;
+	i = g_inf.w_ready->w - 1;
 	j = 0;
 	while (i > 0)
 	{
@@ -27,15 +28,12 @@ void	for_one1(void)
 		i--;
 		j++;
 	}
-	g_inf.sample[0].way = malloc(sizeof(t_ways));
-	g_inf.sample[0].way[0] = *g_inf.w_ready;
+	g_inf.sample[0].way = g_inf.w_ready;
 	g_inf.sample[0].count = 1;
 	g_inf.sam = 0;
-	// if (g_inf.w_heap)
-		// free(g_inf.w_heap);
 }
 
-void	try_to_add(int	i, t_ways *buff, int *a, int *t)
+void	try_to_add(int i, t_ways *buff, int *a, int *t)
 {
 	int		j;
 
@@ -52,7 +50,8 @@ void	try_to_add(int	i, t_ways *buff, int *a, int *t)
 		g_inf.sample[g_inf.c_sample].count = g_inf.sample[i].count + 1;
 		g_inf.sample[g_inf.c_sample].ok = 0;
 		g_inf.sample[g_inf.c_sample].w += buff->w;
-		ft_memcpy(g_inf.sample[g_inf.c_sample].touch, g_inf.sample[i].touch, g_inf.c_room);
+		ft_memcpy(g_inf.sample[g_inf.c_sample].touch, g_inf.sample[i].touch,
+		g_inf.c_room);
 		put_way(&g_inf.sample[g_inf.c_sample], buff, 0, 1);
 		g_inf.c_sample++;
 		*a = 1;

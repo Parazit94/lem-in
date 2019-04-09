@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 15:50:15 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/09 14:58:40 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/09 15:59:06 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,12 @@ void	for_one(void)
 	g_inf.w_heap = malloc(sizeof(t_ways));
 	g_inf.w_heap->way[0] = g_inf.r_start;
 	g_inf.rooms[g_inf.r_start].weight[0] = ROOM * 2;
-	g_inf.w_heap->c_rom++;
-	while ((dst = less_weight(g_inf.w_heap->way[g_inf.w_heap->c_rom - 1])) >= 0)
+	g_inf.w_heap->w = 1;
+	while ((dst = less_weight(g_inf.w_heap->way[g_inf.w_heap->w - 1])) >= 0)
 	{
-		g_inf.w_heap->way[g_inf.w_heap->c_rom] = dst;
-		g_inf.w_heap->c_rom++;
+		g_inf.w_heap->way[g_inf.w_heap->w] = dst;
 		g_inf.w_heap->w++;
 	}
-	g_inf.w_heap->way[g_inf.w_heap->c_rom] = -1;
+	g_inf.w_heap->way[g_inf.w_heap->w] = -1;
 	for_one1();
 }

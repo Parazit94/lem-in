@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 15:46:58 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/09 14:56:15 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/09 15:57:20 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,18 @@ static void	clean_room(void)
 	}
 }
 
+static void	clean_sample(void)
+{
+	int		i;
+
+	i = 0;
+	while (i < g_inf.c_sample)
+	{
+		free(g_inf.sample[i].way);
+		i++;
+	}
+}
+
 void		ft_clean(char *str, int i)
 {
 	if (g_inf.c_room != 0)
@@ -59,6 +71,8 @@ void		ft_clean(char *str, int i)
 		clean_heap(g_inf.w_ready);
 	if (g_inf.connect)
 		clean_connect(g_inf.connect, g_inf.c_room);
+	if (g_inf.c_sample > 0)
+		clean_sample();
 	if (str)
 		ft_printf("%s\n", str);
 	if (i == 1)

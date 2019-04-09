@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 20:05:11 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/09 15:11:57 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/09 16:04:32 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 typedef struct		s_ways
 {
 	int				w;
-	int				c_rom;
 	int				way[ROOM];
 	int				a;
 	int				num;
@@ -51,20 +50,19 @@ typedef struct		s_lem
 {
 	int				c_ant;
 	int				c_room;
+	int				c_ways;
+	int				c_sample;
 	int				r_start;
 	int				r_end;
 	t_room			rooms[ROOM];
 	int				tail[ROOM];
-	int				c_ways;
 	t_ways			*w_heap;
 	t_ways			*w_ready;
 	char			**connect;
 	int				count_ways;
 	int				num_ants;
 	int				t;
-
 	t_sample		sample[99999999];
-	int				c_sample;
 	int				sam;
 }					t_lem;
 t_lem				g_inf;

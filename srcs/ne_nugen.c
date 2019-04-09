@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 21:16:00 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/09 14:48:32 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/09 15:48:52 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ void	print_way(void)
 	while (lol)
 	{
 		j = 0;
-		ft_printf("c_room[%d] = %d\n", i, lol->c_rom);
+		ft_printf("c_room[%d] = %d\n", i, lol->w);
 		while (lol->way[j] != -1)
 		{
 			ft_printf("room[%d] = %d - ", j, lol->way[j]);

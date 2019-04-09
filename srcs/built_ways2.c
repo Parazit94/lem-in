@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 16:07:22 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/09 12:56:32 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/09 15:59:28 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ t_ways	*copy_way(t_ways *buff, int room)
 	new->next = NULL;
 	return (new);
 }
-
 
 void	way_built(t_ways *buff)
 {

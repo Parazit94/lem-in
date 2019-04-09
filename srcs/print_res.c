@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 16:13:10 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/09 15:10:55 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/09 16:02:18 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 static void	push_start(int *way, t_ways *buff, int *j, int i)
 {
-	ft_printf("L%d-%s ", g_inf.rooms[way[i]].num_ant, g_inf.rooms[way[i - 1]].name);
+	ft_printf("L%d-%s ", g_inf.rooms[way[i]].num_ant,
+	g_inf.rooms[way[i - 1]].name);
 	buff->c_ant--;
 	g_inf.rooms[way[i - 1]].ant++;
 	g_inf.rooms[way[i - 1]].num_ant = g_inf.rooms[way[i]].num_ant;
@@ -25,7 +26,8 @@ static void	push_start(int *way, t_ways *buff, int *j, int i)
 
 static void	push_ant(int *way, int *j, int i)
 {
-	ft_printf("L%d-%s ", g_inf.rooms[way[i]].num_ant, g_inf.rooms[way[i - 1]].name);
+	ft_printf("L%d-%s ", g_inf.rooms[way[i]].num_ant,
+	g_inf.rooms[way[i - 1]].name);
 	g_inf.rooms[way[i - 1]].num_ant = g_inf.rooms[way[i]].num_ant;
 	g_inf.rooms[way[i - 1]].ant++;
 	g_inf.rooms[way[i]].ant--;
@@ -45,8 +47,8 @@ static int	push(int *way, int size, t_ways *buff)
 		if (way[i] == g_inf.r_start)
 		{
 			if (buff->c_ant > 0 && g_inf.rooms[way[i - 1]].ant == 0
-			&& g_inf.rooms[way[i - 1]].num_ant == 0)
-			push_start(way, buff, &j, i);
+				&& g_inf.rooms[way[i - 1]].num_ant == 0)
+				push_start(way, buff, &j, i);
 		}
 		else
 		{
@@ -71,7 +73,7 @@ void		walk(void)
 		while (i < g_inf.sample[g_inf.sam].count)
 		{
 			j += push(g_inf.sample[g_inf.sam].way[i].way,
-			g_inf.sample[g_inf.sam].way[i].w, 
+			g_inf.sample[g_inf.sam].way[i].w,
 			&g_inf.sample[g_inf.sam].way[i]);
 			i++;
 		}

@@ -6,13 +6,13 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 16:16:50 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/09 15:14:01 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/09 16:03:26 by vferry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int		diff(t_sample *s, t_ways *buff, int i)
+int			diff(t_sample *s, t_ways *buff, int i)
 {
 	while (i < buff->w)
 	{
@@ -24,7 +24,7 @@ int		diff(t_sample *s, t_ways *buff, int i)
 	return (1);
 }
 
-void	put_way(t_sample *s, t_ways *buff, int i, int j)
+void		put_way(t_sample *s, t_ways *buff, int i, int j)
 {
 	while (i < buff->w)
 	{
@@ -36,7 +36,7 @@ void	put_way(t_sample *s, t_ways *buff, int i, int j)
 	}
 }
 
-static void		pick3(void)
+static void	pick3(void)
 {
 	int		i;
 	t_ways	*buff;
@@ -109,10 +109,7 @@ void		pick(void)
 		ft_bzero(g_inf.sample[g_inf.c_sample].touch, g_inf.c_room);
 		j = 0;
 		while (j < buff->w)
-		{
-			g_inf.sample[g_inf.c_sample].touch[buff->way[j]] = 1;
-			j++;
-		}
+			g_inf.sample[g_inf.c_sample].touch[buff->way[j++]] = 1;
 		g_inf.c_sample++;
 		buff = buff->next;
 		i++;
