@@ -44,7 +44,7 @@ brew install sdl2; brew install sdl2_gfx;
 ```
 Then, run this:
 ```
-git clone https://github.com/ksnow-be/lem_in.git; cd lem-in; make;
+git clone https://github.com/Parazit94/lem-in.git; make;
 ```
 
 **Этот проект сделал на [`MacOs`], следовательно все правила в Makefile будут корректны на этой платформе**
