@@ -8,18 +8,18 @@ FLAGS = -Wall -Wextra -Werror
 all: $(NAME)
 
 objs/%.o: srcs/%.c
-	gcc -I $(INCL) -c $< -o $@ 
+	@gcc `sdl2-config --cflags`  -I $(INCL) -c $< -o $@ 
 
 $(NAME): $(OBJS)
-	make -C libft/
-	gcc -O3 -I$(INCL) -L libft -lft -o $(NAME) $(OBJS) 
+	@make -C libft/
+	@gcc  `sdl2-config --libs` -lSDL2_gfx -O3 -I$(INCL) -L libft -lft -o $(NAME) $(OBJS) 
 
 clean:
-	/bin/rm -f $(OBJS)
-	make -C libft/ clean
+	@/bin/rm -f $(OBJS)
+	@make -C libft/ clean
 
 fclean: clean
-	/bin/rm -f $(NAME)
-	make -C libft/ fclean
+	@/bin/rm -f $(NAME)
+	@make -C libft/ fclean
 
 re: fclean all

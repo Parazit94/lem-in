@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 15:50:15 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/09 15:59:06 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/17 15:33:14 by ksnow-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,13 @@
 
 void	get_ways(void)
 {
-	if (g_inf.c_ant < 2)
+	if (g_inf.connect[g_inf.r_start][g_inf.r_end] == 1 ||
+			g_inf.connect[g_inf.r_end][g_inf.r_start] == 1)
+	{
+		g_inf.flag = 1;
+		print();
+	}
+	else if (g_inf.c_ant < 2)
 		for_one();
 	else
 		for_crowd();

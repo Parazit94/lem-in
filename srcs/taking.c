@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 15:43:46 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/09 14:57:44 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/10 18:17:29 by ksnow-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static void	put_in_room(int *a, char c, char lol)
 		g_inf.rooms[g_inf.c_room].num_ant = 0;
 		g_inf.c_room++;
 	}
-	a = 0;
+	*a = 0;
 }
 
 void		take_room(char *str, char c, int tmp)

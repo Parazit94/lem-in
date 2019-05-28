@@ -6,7 +6,7 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 15:46:58 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/09 15:57:20 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/16 09:57:00 by ksnow-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,10 @@ void		ft_clean(char *str, int i)
 		clean_heap(g_inf.w_ready);
 	if (g_inf.connect)
 		clean_connect(g_inf.connect, g_inf.c_room);
+	if (g_inf.vis)
+		free(g_inf.vis);
+	if (g_inf.lines)
+		free(g_inf.lines);
 	if (g_inf.c_sample > 0)
 		clean_sample();
 	if (str)

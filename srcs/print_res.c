@@ -6,16 +6,40 @@
 /*   By: vferry <vferry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 16:13:10 by vferry            #+#    #+#             */
-/*   Updated: 2019/04/09 16:02:18 by vferry           ###   ########.fr       */
+/*   Updated: 2019/04/17 16:07:26 by ksnow-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static void	push_start(int *way, t_ways *buff, int *j, int i)
+void			print(void)
 {
-	ft_printf("L%d-%s ", g_inf.rooms[way[i]].num_ant,
+	int	i;
+
+	i = 0;
+	while (i < g_inf.c_ant)
+	{
+		ft_printf("L%d-%s ", i + 1, g_inf.rooms[g_inf.r_end].name);
+		g_inf.move[g_inf.iter][g_inf.antgo].num_ant = i + 1;
+		g_inf.move[g_inf.iter][g_inf.antgo].x_dst = g_inf.rooms[g_inf.r_end].x;
+		g_inf.move[g_inf.iter][g_inf.antgo].y_dst = g_inf.rooms[g_inf.r_end].y;
+		g_inf.move[g_inf.iter][g_inf.antgo].operations = 1488;
+		g_inf.antgo++;
+		i++;
+	}
+	ft_printf("\n");
+	g_inf.iter += 1;
+}
+
+static void		push_start(int *way, t_ways *buff, int *j, int i)
+{
+	ft_printf("\033[32mL%d-%s \033[m", g_inf.rooms[way[i]].num_ant,
 	g_inf.rooms[way[i - 1]].name);
+	g_inf.move[g_inf.iter][g_inf.antgo].num_ant = g_inf.rooms[way[i]].num_ant;
+	g_inf.move[g_inf.iter][g_inf.antgo].x_dst = g_inf.rooms[way[i - 1]].x;
+	g_inf.move[g_inf.iter][g_inf.antgo].y_dst = g_inf.rooms[way[i - 1]].y;
+	g_inf.move[g_inf.iter][g_inf.antgo].operations = 1488;
+	g_inf.antgo++;
 	buff->c_ant--;
 	g_inf.rooms[way[i - 1]].ant++;
 	g_inf.rooms[way[i - 1]].num_ant = g_inf.rooms[way[i]].num_ant;
@@ -24,10 +48,15 @@ static void	push_start(int *way, t_ways *buff, int *j, int i)
 	*j = 1;
 }
 
-static void	push_ant(int *way, int *j, int i)
+static void		push_ant(int *way, int *j, int i)
 {
-	ft_printf("L%d-%s ", g_inf.rooms[way[i]].num_ant,
+	ft_printf("\033[36mL%d-%s \033[m", g_inf.rooms[way[i]].num_ant,
 	g_inf.rooms[way[i - 1]].name);
+	g_inf.move[g_inf.iter][g_inf.antgo].num_ant = g_inf.rooms[way[i]].num_ant;
+	g_inf.move[g_inf.iter][g_inf.antgo].x_dst = g_inf.rooms[way[i - 1]].x;
+	g_inf.move[g_inf.iter][g_inf.antgo].y_dst = g_inf.rooms[way[i - 1]].y;
+	g_inf.move[g_inf.iter][g_inf.antgo].operations = 1488;
+	g_inf.antgo++;
 	g_inf.rooms[way[i - 1]].num_ant = g_inf.rooms[way[i]].num_ant;
 	g_inf.rooms[way[i - 1]].ant++;
 	g_inf.rooms[way[i]].ant--;
@@ -35,7 +64,7 @@ static void	push_ant(int *way, int *j, int i)
 	*j = 1;
 }
 
-static int	push(int *way, int size, t_ways *buff)
+static int		push(int *way, int size, t_ways *buff)
 {
 	int		i;
 	int		j;
@@ -57,10 +86,11 @@ static int	push(int *way, int size, t_ways *buff)
 		}
 		i++;
 	}
+	g_inf.move[g_inf.iter][g_inf.antgo].operations = g_inf.antgo + 1;
 	return (j);
 }
 
-void		walk(void)
+void			walk(void)
 {
 	int		i;
 	int		j;
@@ -78,6 +108,10 @@ void		walk(void)
 			i++;
 		}
 		if (j)
+		{
 			ft_printf("\n");
+			g_inf.iter += 1;
+			g_inf.antgo = 0;
+		}
 	}
 }
